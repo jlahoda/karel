@@ -11,27 +11,20 @@
     <modules>
         <module>client</module>
         <module>client-web</module>
-        <module>client-netbeans</module>
+<!--        <module>client-netbeans</module>
         <module>client-android</module>
-        <module>client-ios</module>
+        <module>client-ios</module>-->
         <module>js</module>
     </modules>
     <properties>
-        <net.java.html.version>1.4</net.java.html.version>
-        <bck2brwsr.version>0.20</bck2brwsr.version>
+        <net.java.html.version>1.8.1</net.java.html.version>
+        <bck2brwsr.version>0.54</bck2brwsr.version>
         <bck2brwsr.obfuscationlevel>FULL</bck2brwsr.obfuscationlevel>
         <junit.browser.version>1.0</junit.browser.version>
         <nb.html.version>1.0</nb.html.version>
         <jersey.version>2.13</jersey.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <repositories>
-        <repository>
-            <id>netbeans</id>
-            <name>NetBeans</name>
-            <url>http://bits.netbeans.org/maven2/</url>
-        </repository>
-    </repositories>
     <dependencyManagement>
         <dependencies>
             <dependency>
