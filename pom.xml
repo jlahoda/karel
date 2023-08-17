@@ -17,7 +17,7 @@
         <module>js</module>
     </modules>
     <properties>
-        <net.java.html.version>1.7.3</net.java.html.version> <!--1.8.1 will need a version of bck2brwsr supporting wait4java -->
+        <net.java.html.version>1.7.2</net.java.html.version> <!--1.8.1 will need a version of bck2brwsr supporting wait4java -->
         <bck2brwsr.version>0.54</bck2brwsr.version>
         <bck2brwsr.obfuscationlevel>FULL</bck2brwsr.obfuscationlevel>
         <junit.browser.version>1.0</junit.browser.version>

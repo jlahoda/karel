@@ -17,7 +17,7 @@
   <name>Karel the Code</name>
 
   <properties>
-    <netbeans.compile.on.save>all</netbeans.compile.on.save>
+    <netbeans.compile.on.save>none</netbeans.compile.on.save>
     <project.mainclass>cz.xelfi.karel.Main</project.mainclass>
     <exec.java.bin>${java.home}/bin/java</exec.java.bin>
     <exec.debug.arg>-Ddebug=false</exec.debug.arg>
@@ -81,8 +81,8 @@
                    <arguments>
                        <argument>-classpath</argument>
                        <classpath/>
-                       <argument>-javaagent:${project.build.directory}/springloaded.jar</argument>
-                       <argument>-Xverify:none</argument>
+                       <!--<argument>-javaagent:${project.build.directory}/springloaded.jar</argument>-->
+                       <!--<argument>-Xverify:none</argument>-->
                        <argument>-Dbrowser.rootdir=${basedir}/src/main/webapp/</argument>
                        <argument>-Dnetbeans.inspect.port=${netbeans.inspect.port}</argument>
                        <argument>${exec.debug.arg}</argument>
@@ -90,7 +90,7 @@
                    </arguments>
                 </configuration>
           </plugin>
-          <plugin>
+<!--          <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-dependency-plugin</artifactId>
               <version>2.10</version>
@@ -116,7 +116,7 @@
                       </configuration>
                   </execution>
               </executions>
-          </plugin>
+          </plugin>-->
           <plugin>
               <artifactId>maven-assembly-plugin</artifactId>
               <version>2.4</version>
@@ -192,19 +192,16 @@
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-base</artifactId>
       <version>20.0.2</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-graphics</artifactId>
       <version>20.0.2</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-web</artifactId>
       <version>20.0.2</version>
-      <scope>test</scope>
     </dependency>
   </dependencies>
   <profiles>

@@ -156,6 +156,18 @@
                     <groupId>org.netbeans.html</groupId>
                     <artifactId>net.java.html.boot.fx</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-base</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-graphics</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-web</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
