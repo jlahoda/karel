@@ -57,6 +57,14 @@ function injectKarel(id, keys, loc) {
         return arr;
     }
 
+    function getTopBlocks(ordered) {
+        if (workspace) {
+            return workspace.getTopBlocks(ordered);
+        }
+        var arr = [];
+        return arr;
+    }
+
     var onSelectListener = null;
 
     function toolbox(modify) {
@@ -354,7 +362,8 @@ Blockly.Blocks['karel_call'] = {
         'newBlock': newBlock,
         'listen': addListeners,
         'selected': selectedProcedure,
-        'procedureToString': dump
+        'procedureToString': dump,
+        'getTopBlocks': getTopBlocks
     };
 }
 Blockly['karel'] = injectKarel;

@@ -46,7 +46,44 @@ public final class Workspace {
     }
 
     public Procedure newProcedure(String commandName) {
-        return new Procedure(create1(getJs(), "karel_funkce", commandName), this, commandName, commandName);
+        Object workspace = getJs();
+        Object[] blocks = getTopBlocks0(workspace, true);
+        List<Object> lastLineBlocks = new ArrayList<>();
+        int lastLineStartY = -1;
+        int lastLineEndY = -1;
+        for (Object b : blocks) {
+            int y = getBlocksY(b);
+            int height = getBlocksHeight(b);
+            if (y > lastLineEndY) {
+                lastLineStartY = y;
+                lastLineEndY = y + height;
+                lastLineBlocks.clear();
+                lastLineBlocks.add(b);
+            } else if (y + height < lastLineStartY) {
+                continue;
+            } else {
+                lastLineStartY = Math.min(lastLineStartY, y);
+                lastLineEndY = Math.max(lastLineEndY, y + height);
+                lastLineBlocks.add(b);
+            }
+        }
+        Object block = create1(workspace, "karel_funkce", commandName);
+        if (!lastLineBlocks.isEmpty()) {
+            int dx;
+            int dy;
+            if (lastLineBlocks.size() > 2) {
+                dx = 0;
+                dy = lastLineEndY + 10; //TODO: offset!
+            } else {
+                dx = 0;
+                for (Object b : lastLineBlocks) {
+                    dx = Math.max(dx, getBlocksX(b) + getBlocksWidth(b) + 10);
+                }
+                dy = lastLineStartY;
+            }
+            moveBy0(block, dx, dy, "whatever");
+        }
+        return new Procedure(block, this, commandName, commandName);
     }
 
     public Procedure[] parse(String code) {
@@ -325,6 +362,36 @@ public final class Workspace {
         "return workspace.selected();\n"
     )
     private static native Object[] selected0(Object workspace);
+
+    @JavaScriptBody(args = { "workspace", "ordered" }, body =
+        "return workspace.getTopBlocks(ordered);\n"
+    )
+    private static native Object[] getTopBlocks0(Object workspace, boolean ordered);
+
+    @JavaScriptBody(args = { "block" }, body =
+        "return block.getRelativeToSurfaceXY().x;\n"
+    )
+    private static native int getBlocksX(Object block);
+
+    @JavaScriptBody(args = { "block" }, body =
+        "return block.getRelativeToSurfaceXY().y;\n"
+    )
+    private static native int getBlocksY(Object block);
+
+    @JavaScriptBody(args = { "block" }, body =
+        "return block.getHeightWidth().width;\n"
+    )
+    private static native int getBlocksWidth(Object block);
+
+    @JavaScriptBody(args = { "block" }, body =
+        "return block.getHeightWidth().height;\n"
+    )
+    private static native int getBlocksHeight(Object block);
+
+    @JavaScriptBody(args = { "block", "dx", "dy", "reason" }, body =
+        "return block.moveBy(dx, dy, reason);\n"
+    )
+    private static native void moveBy0(Object block, int dx, int dy, String reason);
 
     @JavaScriptBody(args = { "workspace", "proc" }, body = "return workspace.procedureToString(proc);")
     static native String procedureToString(Object workspace, Object proc);

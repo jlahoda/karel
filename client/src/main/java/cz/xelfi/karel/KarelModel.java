@@ -150,6 +150,12 @@ final class KarelModel {
         m.setTab("task");
     }
 
+    @ModelOperation @Function static void nextTask(Karel m) throws URISyntaxException {
+        List<TaskInfo> currentTasks = m.getTasks();
+        int idx = currentTasks.indexOf(m.getCurrentInfo());
+        chooseTask(m, currentTasks.get(idx + 1)); //TODO: check all handled
+    }
+
     @Function static void changeTabEdit(Karel m) {
         m.setTab("edit");
     }
@@ -484,6 +490,9 @@ final class KarelModel {
         }
         m.setCurrentTask(td);
         m.setTab("town");
+        if (td.getCommand() != null) {
+            edit(m);
+        }
     }
 
     static void errorLoadingTask(Karel m, Exception ex) {
