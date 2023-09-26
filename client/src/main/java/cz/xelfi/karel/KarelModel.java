@@ -28,10 +28,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.java.html.BrwsrCtx;
 import net.java.html.json.ComputedProperty;
 import net.java.html.json.Function;
@@ -239,6 +238,10 @@ final class KarelModel {
         if (data == null) {
             return;
         }
+        invokeScratch(m, data);
+    }
+
+    @Function static void invokeScratch(Karel m, Command data) {
         Procedure procedure = findWorkspace(m).findProcedure(data.getId());
         if (procedure == null) {
             refreshCommands(m, false);
@@ -248,6 +251,15 @@ final class KarelModel {
         KarelCompiler frame = KarelCompiler.execute(m.getScratch().getTown(), procedure, data.getName());
         comps.add(frame);
         m.animate(comps);
+    }
+
+    @Function static void invokeGo(Karel m) {
+        Optional<Command> toInvoke =
+                karel.getCommands()
+                     .stream()
+                     .filter(c -> c.getName().equals(karel.getCurrentTask().getCommand()))
+                     .findAny();
+        toInvoke.ifPresent(c -> invokeScratch(m, c));
     }
 
     @Function static void invoke(Karel m, Command data) {
@@ -493,6 +505,7 @@ final class KarelModel {
         if (td.getCommand() != null) {
             edit(m);
         }
+        TownModel.load(m.getScratch().getTown(), td.getTests().get(0).getStart());
     }
 
     static void errorLoadingTask(Karel m, Exception ex) {

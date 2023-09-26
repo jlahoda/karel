@@ -120,11 +120,12 @@
                         <p></p>
                         <!-- ko foreach: $root.commands -->
                         <button type="button" class="btn btn-info" 
-                          data-bind="text: name,click: $root.invoke,enable: !$root.running()">
+                          data-bind="text: name,click: $root.invoke,enable: !$root.running(),visible: !$parent.command()">
                         </button>
                         <!-- /ko -->
-                        <button type="button" class="btn btn-default" data-bind="click: $root.edit, visible: command">
-                            Definuj <span data-bind="text: command"></span>
+                        <button type="button" class="btn btn-info"
+                          data-bind="click: $root.invokeGo,enable: !$root.running(),visible: command()">
+                            GO!
                         </button>
                         <!--
                         <progress max="1000" data-bind="value: speed"></progress>
@@ -132,7 +133,7 @@
                         <p></p>
                     </div>
                 </div>
-                <div data-bind="foreach: tests">
+<!--                <div data-bind="foreach: tests">
                     <p></p>
                     <div class="alert alert-info" >
                         <span class="karel-result glyphicon" 
@@ -150,7 +151,7 @@
                         <div class="col-sm-12" data-bind="template: { name: 'draw-town', data: current, if: showing() === 'current' }"></div>
                         <div class="col-sm-12" data-bind="template: { name: 'draw-town', data: end, if: showing() === 'end' }"></div>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
     </template>
@@ -205,7 +206,7 @@
                 <div style="display: none" data-bind="visible: currentInfo">
                     <div data-bind="with: currentInfo">Úkol: <span data-bind="text: name"></span></div>
                 </div>
-                <div style="display: none" class="input-group" data-bind="visible: currentTask, with: currentTask">
+<!--                <div style="display: none" class="input-group" data-bind="visible: currentTask, with: currentTask">
                     <form role="form">
                     <div class="input-group-btn">
                         <input type="text" class="form-control" data-bind="textInput: description">
@@ -215,7 +216,7 @@
                         </ul>
                     </div>
                     </form>
-                </div>
+                </div>-->
 <!--
                 <span data-bind="foreach: tests">
                     <div class="alert alert-info" >
