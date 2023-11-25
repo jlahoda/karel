@@ -26,24 +26,8 @@
     "tests" : [
         {
             "description" : "Udělá krok na jih.",
-            "start" : {"rows":[null,null,null,null,null,null,null,{"columns":[null,null,null,{"robot":2,"marks":0},null,null,null,null,null,null]},null,null]},
-            "end" : {"rows":[null,null,null,null,null,null,null,null,{"columns":[null,null,null,{"robot":2,"marks":0},null,null,null,null,null,null]},null]}
-        },
-        {
-            "description" : "Je-li na západ, udělá krok na západ. Je jedno, že pod ním je značka.",
-            "start" : {"rows":[null,null,null,null,null,null,null,null,
-                    {"columns":[null,{"robot":3,"marks":2},null,null,null,null,null,null,null,null]},
-                    null
-                ]},
-            "end" : {"rows":[null,null,null,null,null,null,null,null,
-                    {"columns":[{"robot":3,"marks":0},{"robot":0,"marks":2},null,null,null,null,null,null,null,null]},
-                    null
-                ]}
-        },
-        {
-            "description" : "Je-li u zdi, narazí.",
-            "start" : {"rows":[null,null,null,null,null,null,null,null,null,{"columns":[{"robot":3,"marks":0},null,null,null,null,null,null,null,null,null]}]},
-            "end" : {"error": 1, "rows":[null,null,null,null,null,null,null,null,null,{"columns":[{"robot":3,"marks":0},null,null,null,null,null,null,null,null,null]}]}
+            "start" : {"rows":[null,null,null,null,null,{"columns":[null,{"exit":true},null,null,null,null,null,null,null,null]},null,{"columns":[null,null,null,{"robot":2,"marks":0},null,null,null,null,null,null]},null,null]},
+            "end" : {"rows":[null,null,null,null,null,{"columns":[null,{"robot":2,"exit":true},null,null,null,null,null,null,null,null]},null,null,null,null]},
         }
     ]
 }]

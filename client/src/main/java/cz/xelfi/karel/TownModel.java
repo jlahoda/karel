@@ -92,6 +92,7 @@ class TownModel {
     @Model(className = "Square", properties = {
         @Property(name = "robot", type = int.class),
         @Property(name = "marks", type = int.class),
+        @Property(name = "exit", type = boolean.class),
     })
     static class SquareModel {
         static boolean isEmpty(Square sq) {
@@ -169,7 +170,7 @@ class TownModel {
                     sq.setMarks(0);
                     sq.setRobot(0);
                 } else {
-                    cl.add(new Square(0, 0));
+                    cl.add(new Square(0, 0, false));
                 }
             }
             while (cl.size() > columns) {

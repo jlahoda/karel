@@ -106,21 +106,23 @@
                 <div class="well">
                     <p data-bind="text: description"></p>
                 </div>
-                <div class="row" data-bind="visible: awarded" style="font-size: 64px">
+                <div class="row" data-bind="visible: commandRan" style="font-size: 64px">
                     <center>
                     <button type="button" class="btn btn-info" data-bind="click: reset">Znovu
                         <span class="glyphicon glyphicon-repeat"></span>
                     </button>
-                    <span class="glyphicon glyphicon-star" style="color: yellow"> </span>
-                    <button type="button" class="btn btn-success" data-bind="click: $root.nextTask">Další úkol &raquo;</button>
+                    <div class="row" data-bind="visible: exitReached" style="font-size: 64px">
+                        <!--<span class="glyphicon glyphicon-star" style="color: yellow"> </span>-->
+                        <button type="button" class="btn btn-success" data-bind="click: $root.nextTask">Další úkol &raquo;</button>
+                    </div>
                     </center>
                 </div>
-                <div class="row" data-bind="visible: awarded() === 0">
+                <div class="row" data-bind="visible: !commandRan()">
                     <div class="col-sm-12">
                         <p></p>
                         <!-- ko foreach: $root.commands -->
                         <button type="button" class="btn btn-info" 
-                          data-bind="text: name,click: $root.invoke,enable: !$root.running(),visible: !$parent.command()">
+                          data-bind="text: name,click: $root.invokeManual,enable: !$root.running(),visible: !$parent.command()">
                         </button>
                         <!-- /ko -->
                         <button type="button" class="btn btn-info"
@@ -185,7 +187,7 @@
                         <td data-bind="click: $parents[1].rotate">
                             <!-- i class="material-icons">&#xE868;</i -->
                             <div class="karel material-icons robot" data-bind="visible: robot() !== 0, css: ('direction-' + robot())">&#xE868;</div>
-                            <div class="karel" data-bind="css: ('mark-' + marks())"></div>
+                            <div class="karel" data-bind="css: ('mark-' + marks(), exit() ? 'exit' : '')"></div>
                         </td>
                         <!-- /ko -->
                     </tr>

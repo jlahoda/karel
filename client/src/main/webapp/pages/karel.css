@@ -176,6 +176,10 @@ table.town div.mark-111 {
     background-color: #79781E;
 }
 
+table.town div.exit:after {
+    content: 'E';
+}
+
 .karel-result {
     font-size: 24px;
     vertical-align: middle;

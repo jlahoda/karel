@@ -56,7 +56,9 @@ import net.java.html.json.Property;
     @Property(name = "paused", type = boolean.class),
     @Property(name = "running", type = boolean.class),
     @Property(name = "tasksUrl", type = String.class),
-    @Property(name = "tasks", type = TaskInfo.class, array = true)
+    @Property(name = "tasks", type = TaskInfo.class, array = true),
+    @Property(name = "exitReached", type = boolean.class),
+    @Property(name = "commandRan", type = boolean.class)
 })
 final class KarelModel {
     /** @guardedby(this) */
@@ -89,6 +91,16 @@ final class KarelModel {
                 refreshCommands(karel, true);
             }
         });
+
+        {
+            //temporary: attempt to switch to test tabs:
+            Karel m = karel;
+        List<TaskInfo> currentTasks = m.getTasks();
+        String tasks = m.getTasksUrl();
+        m.loadTasks(tasks, new URI(tasks));
+        m.setTab("task");
+//        chooseTask(m, currentTasks.get(0)); //TODO: check all handled
+        }
 
         return karel;
     }
@@ -241,6 +253,10 @@ final class KarelModel {
         invokeScratch(m, data);
     }
 
+    @Function static void invokeManual(Karel m, Command data) {
+        invokeScratch(m, data);
+    }
+
     @Function static void invokeScratch(Karel m, Command data) {
         Procedure procedure = findWorkspace(m).findProcedure(data.getId());
         if (procedure == null) {
@@ -365,17 +381,28 @@ final class KarelModel {
             }
         } else {
             model.setRunning(false);
-            boolean ok = true;
+            findWorkspace(model);
+//            Town t = model.sta;
+//            boolean ok = true;
             final TaskDescription currentTask = model.getCurrentTask();
             if (currentTask != null) {
-                for (TaskTestCase c : currentTask.getTests()) {
-                    ok &= TaskModel.TestCaseModel.checkState(c);
+                Town t = currentTask.getTests().get(0).getCurrent();
+                for (Row r : t.getRows()) {
+                    for (Square s : r.getColumns()) {
+                        if (s.getRobot() != 0 && s.isExit()) {
+                            //success!!
+                            model.setExitReached(true);
+                        }
+                    }
                 }
-                int award = 1;
-                if (ok && model.getCurrentInfo() != null && model.getCurrentInfo().getAwarded() < award) {
-                    model.getCurrentInfo().setAwarded(award);
-                }
-                currentTask.setAwarded(1);
+//                for (TaskTestCase c : currentTask.getTests()) {
+//                    ok &= TaskModel.TestCaseModel.checkState(c);
+//                }
+//                int award = 1;
+//                if (ok && model.getCurrentInfo() != null && model.getCurrentInfo().getAwarded() < award) {
+//                    model.getCurrentInfo().setAwarded(award);
+//                }
+//                currentTask.setAwarded(1);
             }
         }
     }
