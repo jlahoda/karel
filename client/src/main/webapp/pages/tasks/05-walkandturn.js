@@ -16,19 +16,19 @@
  * along with this program. Look for COPYING file in the top folder.
  * If not, see http://opensource.org/licenses/GPL-2.0.
  */
-    "description" : "Pokud Karel stojí u zdi, ať nedělá nic. Pokud je ode zdi " + 
-        "vzdálen, ať udělá jeden krok. Využij příkaz 'když'.",
-    "command" : "opatrný-krok",
+    "description" : "<p>Uff, that's another room behind me, thanks!</p>" +
+                    "<p>Please help he through this room as well!</p>",
+    "hint": "<p>In this room, Karla needs to go straight for a bit, then turn right, " +
+            "and the go straight for a bit more. Please use the 'turn-right' command " + 
+            "that you defined before to turn right.</p>" +
+            "You could also observe that Karla in both cases needs to go exactly " + 
+            "6 steps - we have a command for that, why not use it?</p>",
+    "command" : "walk-turn-walk",
     "tests" : [
         {
             "description" : "Krok na sever.",
-            "start" : {"rows":[null,null,null,null,null,null,null,{"columns":[null,null,null,{"robot":4,"marks":0},null,null,null,null,null,null]},null,null]},
+            "start" : {"rows":[{"columns":[null,null,null,null,null,null,{"exit":true},null,null,null]},null,null,null,null,null,{"columns":[{"robot":4,"marks":0},null,null,null,null,null,null,null,null,null]},null,null,null]},
             "end" : {"rows":[null,null,null,null,null,null,{"columns":[null,null,null,{"robot":4,"marks":0},null,null,null,null,null,null,null]},null,null]},
-        },
-        {
-            "description" : "Nedělej nic, ať nenarazíš.",
-            "start" : {"rows":[null,null,null,null,null,null,null,{"columns":[{"robot":3,"marks":0},null,null,null,null,null,null,null,null,null]},null,null]},
-            "end" : {"rows":[null,null,null,null,null,null,null,{"columns":[{"robot":3,"marks":0},null,null,null,null,null,null,null,null,null]},null,null]},
         }
     ]
 }]

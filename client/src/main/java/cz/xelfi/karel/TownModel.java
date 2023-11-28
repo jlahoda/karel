@@ -34,6 +34,7 @@ import net.java.html.json.Property;
     @Property(name = "rows", type = Row.class, array = true)
 })
 class TownModel {
+
     @Model(className = "Row", properties = {
         @Property(name = "columns", type = Square.class, array = true)
     })
@@ -72,6 +73,12 @@ class TownModel {
         } catch (IndexOutOfBoundsException ex) {
             return true;
         }
+    }
+
+    static boolean isExit(Town town) {
+        int[] xyd = findKarel(town);
+        Square sq = town.getRows().get(xyd[1]).getColumns().get(xyd[0]);
+        return sq.isExit();
     }
 
     @ModelOperation

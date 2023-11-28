@@ -137,6 +137,10 @@ public final class Execution {
                 if (exec == State.FINISHED) {
                     delegate = null;
                     returned = true;
+                    if (env.isExit()) {
+                        current = State.FINISHED;
+                        return State.FINISHED;
+                    }
                 } else {
                     return (State)(current = exec);
                 }
@@ -202,6 +206,10 @@ public final class Execution {
                 default:
                     throw new IllegalStateException(info.type);
             }
+            if (env.isExit()) {
+                current = State.FINISHED;
+                return State.FINISHED;
+            }
             if (next != null) {
                 current = next;
             } else {
@@ -242,6 +250,7 @@ public final class Execution {
 
     public static interface Environment {
         public boolean isCondition(Condition c);
+        public boolean isExit();
         public void left();
         public boolean step();
         public boolean put();

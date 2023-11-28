@@ -42,6 +42,11 @@ final class KarelCompiler implements Execution.Environment {
     }
 
     @Override
+    public boolean isExit() {
+        return TownModel.isExit(town);
+    }
+
+    @Override
     public void left() {
         town.left();
     }

@@ -37,6 +37,7 @@ class TaskModel {
     @Model(className = "TaskDescription", properties = {
         @Property(name = "name", type = String.class),
         @Property(name = "description", type = String.class),
+        @Property(name = "hint", type = String.class),
         @Property(name = "command", type = String.class),
         @Property(name = "awarded", type = int.class),
         @Property(name = "tests", array = true, type = TaskTestCase.class)

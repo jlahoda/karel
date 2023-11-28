@@ -135,6 +135,11 @@ public class BlocklyTest {
             }
 
             @Override
+            public boolean isExit() {
+                return false;
+            }
+
+            @Override
             public void left() {
                 cnt++;
             }
@@ -228,6 +233,11 @@ public class BlocklyTest {
             }
 
             @Override
+            public boolean isExit() {
+                return false;
+            }
+
+            @Override
             public void left() {
                 cnt++;
             }
@@ -309,6 +319,11 @@ public class BlocklyTest {
                 if (c == Execution.Condition.NORTH) {
                     return direction == 0;
                 }
+                return false;
+            }
+
+            @Override
+            public boolean isExit() {
                 return false;
             }
 
@@ -402,6 +417,11 @@ public class BlocklyTest {
                 if (c == Execution.Condition.NORTH) {
                     return direction == 0;
                 }
+                return false;
+            }
+
+            @Override
+            public boolean isExit() {
                 return false;
             }
 
@@ -611,6 +631,11 @@ public class BlocklyTest {
         }
 
         @Override
+        public boolean isExit() {
+            return false;
+        }
+
+        @Override
         public void left() {
         }
 
@@ -647,6 +672,11 @@ public class BlocklyTest {
             if (c == Execution.Condition.MARK) {
                 return steps > 0;
             }
+            return false;
+        }
+
+        @Override
+        public boolean isExit() {
             return false;
         }
 

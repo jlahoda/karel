@@ -16,13 +16,11 @@
  * along with this program. Look for COPYING file in the top folder.
  * If not, see http://opensource.org/licenses/GPL-2.0.
  */
-    "description" : "Každý úkol je popsán slovně a k tomu je doplněn i " + 
-        "několika názornými situacemi. V každé situaci je znázorněna výchozí  " + 
-        "pozice a také cílová pozice. Je třeba vybrat ten Karlův příkaz, který " +
-        "jej ve všech situacích dostane z výchozí pozice do cílové. V tomto " +
-        "úkolu je Karlových cílem udělat krok, což je zároveň jeden ze základních " +
-        "příkazů, který Karel umí. Zvol jej a ověř, že ve všech situacích Karla " +
-        "posune do cílové pozice.",
+    "description" : "<p>I need your help!</p>" +
+                    "<p>I'm robot Karla, and I got lost in this building. My navigation " +
+                    "circuits are broken, so I cannot navigate properly.</p>" +
+                    "<p>Could you please use the commands, and guide me to the exit?</p>",
+    "hint" : "Use the 'turn-left' and 'move' commands to move Karla to the exit.",
     "tests" : [
         {
             "description" : "Guide Karla to the exit.",

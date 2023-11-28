@@ -363,11 +363,11 @@ final class KarelModel {
             if (currentTask != null) {
                 List<TaskInfo> currentTasks = model.getTasks();
                 int task = currentTasks.indexOf(model.getCurrentInfo());
-                boolean finished = task > 1;
+                boolean finished = task > 2;
                 Town t = model.getScratch().getTown();
                 int[] orientation = new int[3];
                 Square robotSquare = TownModel.findKarelSquare(t, orientation);
-                if (task == 1) {
+                if (task == 1 || task == 2) {
                     orientation = TownModel.stepInDirection(orientation);
                     try {
                         boolean headingToExit = t.getRows().get(orientation[1]).getColumns().get(orientation[0]).isExit();
@@ -551,7 +551,7 @@ final class KarelModel {
     }
 
     static void errorLoadingTask(Karel m, Exception ex) {
-        TaskDescription td = new TaskDescription("Error", "Cannot load task: " + ex.getLocalizedMessage(), null, 0);
+        TaskDescription td = new TaskDescription("Error", "Cannot load task: " + ex.getLocalizedMessage(),null, null, 0);
         m.setCurrentTask(td);
     }
 }

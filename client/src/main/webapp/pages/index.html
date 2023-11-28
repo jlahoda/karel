@@ -104,7 +104,8 @@
                     </div>
                 </div>
                 <div class="well">
-                    <p data-bind="text: description"></p>
+                    <p data-bind="html: description"></p>
+                    <p>HINT: <span data-bind="html: hint"/></p> <!--TODO: collapsible-->
                 </div>
                 <div class="row" data-bind="visible: $root.commandDone" style="font-size: 64px">
                     <center>

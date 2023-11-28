@@ -16,24 +16,18 @@
  * along with this program. Look for COPYING file in the top folder.
  * If not, see http://opensource.org/licenses/GPL-2.0.
  */
-    "description" : "Vytvoř příkaz, který udělá šest kroků. " + 
-        "Neopakuj příkaz 'krok' šestkrát. Raději využij příkaz 'opakuj'!",
-    "command" : "šest-kroků",
+    "description" : "Thanks for guiding me through that room! Can you guide me " + 
+                    "through this room as well?",
+    "hint": "This is similar to the previous room - Karla just needs to go forward. " +
+            "The difference now is that the exit is far away. Instead of specifying " +
+            "the move command 6 times, use the 'repeat' command to repeat the 'move' " + 
+            "command 6 times.",
+    "command" : "six-steps",
     "tests" : [
         {
             "description" : "Šest kroků na sever.",
-            "start" : {"rows":[null,null,null,null,null,null,null,{"columns":[null,null,null,{"robot":4,"marks":0},null,null,null,null,null,null]},null,null]},
+            "start" : {"rows":[null,{"columns":[null,null,null,{"exit":true},null,null,null,null,null,null]},null,null,null,null,null,{"columns":[null,null,null,{"robot":4,"marks":0},null,null,null,null,null,null]},null,null]},
             "end" : {"rows":[null,{"columns":[null,null,null,{"robot":4,"marks":0},null,null,null,null,null,null]},null,null,null,null,null,null,null,null]}
-        },
-        {
-            "description" : "Šest kroků na východ.",
-            "start" : {"rows":[null,null,null,null,null,null,null,{"columns":[null,null,null,{"robot":1,"marks":0},null,null,null,null,null,null]},null,null]},
-            "end" : {"rows":[null,null,null,null,null,null,null,{"columns":[null,null,null,null,null,null,null,null,null,{"robot":1,"marks":0}]},null,null]}
-        },
-        {
-            "description" : "Náraz do zdi.",
-            "start" : {"rows":[null,null,null,null,null,null,null,{"columns":[null,null,null,{"robot":3,"marks":0},null,null,null,null,null,null]},null,null]},
-            "end" : {"error":1,"rows":[null,null,null,null,null,null,null,{"columns":[{"robot":3,"marks":0},null,null,null,null,null,null,null,null,null]},null,null]}
         }
     ]
 }]
