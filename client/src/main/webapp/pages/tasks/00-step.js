@@ -25,7 +25,7 @@
         "posune do cílové pozice.",
     "tests" : [
         {
-            "description" : "Udělá krok na jih.",
+            "description" : "Guide Karla to the exit.",
             "start" : {"rows":[null,null,null,null,null,{"columns":[null,{"exit":true},null,null,null,null,null,null,null,null]},null,{"columns":[null,null,null,{"robot":2,"marks":0},null,null,null,null,null,null]},null,null]},
             "end" : {"rows":[null,null,null,null,null,{"columns":[null,{"robot":2,"exit":true},null,null,null,null,null,null,null,null]},null,null,null,null]},
         }

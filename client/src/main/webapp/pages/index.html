@@ -106,18 +106,18 @@
                 <div class="well">
                     <p data-bind="text: description"></p>
                 </div>
-                <div class="row" data-bind="visible: commandRan" style="font-size: 64px">
+                <div class="row" data-bind="visible: $root.commandDone" style="font-size: 64px">
                     <center>
                     <button type="button" class="btn btn-info" data-bind="click: reset">Znovu
                         <span class="glyphicon glyphicon-repeat"></span>
                     </button>
-                    <div class="row" data-bind="visible: exitReached" style="font-size: 64px">
+                    <span data-bind="visible: $root.exitReached">
                         <!--<span class="glyphicon glyphicon-star" style="color: yellow"> </span>-->
                         <button type="button" class="btn btn-success" data-bind="click: $root.nextTask">Další úkol &raquo;</button>
-                    </div>
+                    </span>
                     </center>
                 </div>
-                <div class="row" data-bind="visible: !commandRan()">
+                <div class="row" data-bind="visible: !$root.commandDone()">
                     <div class="col-sm-12">
                         <p></p>
                         <!-- ko foreach: $root.commands -->

@@ -23,22 +23,12 @@
         "vyvolá-li někdo 'čelem-vzad'. Pak zadej 'Přeložit' a spusť nově vytvořený " +
         "příkaz. Je-li správně nadefinován, vyřeší všechny tři připravené situace."
         ,
-    "command" : "čelem-vzad",
+    "command" : "turn-right",
     "tests" : [
         {
-            "description" : "Kouká na sever. Otočí se na jih.",
-            "start" : {"rows":[null,null,null,null,null,null,null,{"columns":[null,null,null,{"robot":4,"marks":0},null,null,null,null,null,null]},null,null]},
+            "description" : "Spin Karla so that she faces the exit.",
+            "start" : {"rows":[null,null,null,null,null,null,null,{"columns":[null,null,null,{"robot":4,"marks":0},{"exit":true},null,null,null,null,null]},null,null]},
             "end" : {"rows":[null,null,null,null,null,null,null,{"columns":[null,null,null,{"robot":2,"marks":0},null,null,null,null,null,null]},null,null]}
-        },
-        {
-            "description" : "Je-li na západ, bude na východ.",
-            "start" : {"rows":[null,null,null,null,null,null,null,null,{"columns":[null,{"robot":3,"marks":0},null,null,null,null,null,null,null,null]},null]},
-            "end" : {"rows":[null,null,null,null,null,null,null,null,{"columns":[null,{"robot":1,"marks":0},null,null,null,null,null,null,null,null]},null]}
-        },
-        {
-            "description" : "Nevadí, že je u zdi a jsou tam značky.",
-            "start" : {"rows":[null,null,null,null,null,null,null,null,null,{"columns":[null,{"robot":2,"marks":3},null,null,null,null,null,null,null,null]}]},
-            "end" : {"rows":[null,null,null,null,null,null,null,null,null,{"columns":[null,{"robot":4,"marks":3},null,null,null,null,null,null,null,null]}]}
         }
     ]
 }]

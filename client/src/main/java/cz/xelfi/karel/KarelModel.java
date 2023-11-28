@@ -17,6 +17,8 @@
  */
 package cz.xelfi.karel;
 
+import static cz.xelfi.karel.TownModel.findKarel;
+import cz.xelfi.karel.blockly.Execution;
 import cz.xelfi.karel.blockly.Execution.State;
 import cz.xelfi.karel.blockly.Procedure;
 import cz.xelfi.karel.blockly.Workspace;
@@ -25,6 +27,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
@@ -58,7 +61,7 @@ import net.java.html.json.Property;
     @Property(name = "tasksUrl", type = String.class),
     @Property(name = "tasks", type = TaskInfo.class, array = true),
     @Property(name = "exitReached", type = boolean.class),
-    @Property(name = "commandRan", type = boolean.class)
+    @Property(name = "commandDone", type = boolean.class)
 })
 final class KarelModel {
     /** @guardedby(this) */
@@ -165,6 +168,8 @@ final class KarelModel {
         List<TaskInfo> currentTasks = m.getTasks();
         int idx = currentTasks.indexOf(m.getCurrentInfo());
         chooseTask(m, currentTasks.get(idx + 1)); //TODO: check all handled
+        m.setExitReached(false);
+        m.setCommandDone(false);
     }
 
     @Function static void changeTabEdit(Karel m) {
@@ -352,58 +357,68 @@ final class KarelModel {
     @ModelOperation void animate(final Karel model, List<KarelCompiler> frames) {
         final List<KarelCompiler> next = animateOne(model, frames);
         if (!next.isEmpty()) {
-            model.setRunning(true);
-            int spd = 1000 / model.getSpeed();
-            if (spd < 0) {
-                animate(model, next);
-            } else {
-                synchronized (this) {
-                    if (this.pausedFrames != null) {
-                        this.pausedFrames.add(next);
-                        return;
-                    }
-                }
-                if (spd < 3) {
-                    spd = 3;
-                }
-                if (spd > 1000) {
-                    spd = 1000;
-                }
-                KAREL.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-                        if (!model.isRunning()) {
-                            return;
-                        }
-                        model.animate(next);
-                    }
-                }, spd);
-            }
+            animateNext(model, next);
         } else {
-            model.setRunning(false);
-            findWorkspace(model);
-//            Town t = model.sta;
-//            boolean ok = true;
             final TaskDescription currentTask = model.getCurrentTask();
             if (currentTask != null) {
-                Town t = currentTask.getTests().get(0).getCurrent();
-                for (Row r : t.getRows()) {
-                    for (Square s : r.getColumns()) {
-                        if (s.getRobot() != 0 && s.isExit()) {
-                            //success!!
-                            model.setExitReached(true);
+                List<TaskInfo> currentTasks = model.getTasks();
+                int task = currentTasks.indexOf(model.getCurrentInfo());
+                boolean finished = task > 1;
+                Town t = model.getScratch().getTown();
+                int[] orientation = new int[3];
+                Square robotSquare = TownModel.findKarelSquare(t, orientation);
+                if (task == 1) {
+                    orientation = TownModel.stepInDirection(orientation);
+                    try {
+                        boolean headingToExit = t.getRows().get(orientation[1]).getColumns().get(orientation[0]).isExit();
+                        if (headingToExit) {
+                            Procedure move = workspace.findProcedure("STEP");
+
+                            animateNext(model, Arrays.asList(KarelCompiler.execute(t, move, "move")));
+                            return ;
                         }
+                    } catch (IndexOutOfBoundsException ex) {
+                        //access beyond limits, OK
                     }
                 }
-//                for (TaskTestCase c : currentTask.getTests()) {
-//                    ok &= TaskModel.TestCaseModel.checkState(c);
-//                }
-//                int award = 1;
-//                if (ok && model.getCurrentInfo() != null && model.getCurrentInfo().getAwarded() < award) {
-//                    model.getCurrentInfo().setAwarded(award);
-//                }
-//                currentTask.setAwarded(1);
+                if (robotSquare.isExit()) {
+                    //success!!
+                    model.setExitReached(true);
+                    finished = true;
+                }
+                model.setCommandDone(finished);
             }
+            model.setRunning(false);
+        }
+    }
+
+    void animateNext(final Karel model, List<KarelCompiler> next) {
+        model.setRunning(true);
+        int spd = 1000 / model.getSpeed();
+        if (spd < 0) {
+            animate(model, next);
+        } else {
+            synchronized (this) {
+                if (this.pausedFrames != null) {
+                    this.pausedFrames.add(next);
+                    return;
+                }
+            }
+            if (spd < 3) {
+                spd = 3;
+            }
+            if (spd > 1000) {
+                spd = 1000;
+            }
+            KAREL.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (!model.isRunning()) {
+                        return;
+                    }
+                    model.animate(next);
+                }
+            }, spd);
         }
     }
 

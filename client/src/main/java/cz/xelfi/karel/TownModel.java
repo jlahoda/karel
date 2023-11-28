@@ -230,7 +230,7 @@ class TownModel {
         sq.setRobot(0);
     }
 
-    private static int[] stepInDirection(int[] xyd) {
+    static int[] stepInDirection(int[] xyd) {
         int[] old = xyd.clone();
         switch (xyd[2]) {
             case 1: old[0]++; break;

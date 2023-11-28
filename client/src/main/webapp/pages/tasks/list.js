@@ -17,7 +17,7 @@
  * If not, see http://opensource.org/licenses/GPL-2.0.
  */
     { "name" : "Udělej krok", "url": "00-step.js", "required" : 0 },
-    { "name" : "Otoč se čelem vzad", "url": "01-turnback.js", "required" : 1 },
+    { "name" : "Otoč se čelem vzad", "url": "01-turnright.js", "required" : 1 },
     { "name" : "Dva kroky", "url": "02-twosteps.js", "required" : 1 },
     { "name" : "Vpravo vbok", "url": "03-turnright.js", "required" : 3 },
     { "name" : "Šest kroků", "url": "04-sixsteps.js", "required" : 4 },
