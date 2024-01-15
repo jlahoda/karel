@@ -64,7 +64,7 @@ public class KarelModelTest {
         end.left();
         end.setError(1);
         
-        TaskDescription td = new TaskDescription("xyz", "xyz", null, 0,
+        TaskDescription td = new TaskDescription("xyz", "xyz", null, null, 0,
             new TaskTestCase("xyz", init, null, end, prg, "current")
         );
         Karel km = new Karel().
@@ -149,7 +149,7 @@ public class KarelModelTest {
         Town end = init.clone();
         end.put();
         
-        TaskDescription td = new TaskDescription("xyz", "xyz", null, 0,
+        TaskDescription td = new TaskDescription("xyz", "xyz", null, null, 0,
             new TaskTestCase("xyz", init, null, end, prg, "current")
         );
         Karel km = new Karel().

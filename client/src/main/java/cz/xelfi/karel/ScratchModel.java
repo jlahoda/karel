@@ -27,11 +27,12 @@ import net.java.html.json.Property;
  */
 @Model(className = "Scratch", properties = {
     @Property(name = "text", type = String.class),
-    @Property(name = "town", type = Town.class)
+    @Property(name = "towns", type = Town.class, array = true),
+    @Property(name = "current", type = int.class)
 })
 final class ScratchModel {
-    @Function static void dump(Scratch m) {
-        m.setText(TownModel.toJSON(m.getTown()));
-    }
+//    @Function static void dump(Scratch m) {
+//        m.setText(TownModel.toJSON(m.getTown()));
+//    }
     
 }

@@ -81,6 +81,12 @@
                    <arguments>
                        <argument>-classpath</argument>
                        <classpath/>
+                       <argument>--module-path</argument>
+                       <argument>${env.HOME}/.m2/repository/org/openjfx/javafx-base/21.0.1/javafx-base-21.0.1.jar:${env.HOME}/.m2/repository/org/openjfx/javafx-base/21.0.1/javafx-base-21.0.1-linux.jar:${env.HOME}/.m2/repository/org/openjfx/javafx-graphics/21.0.1/javafx-graphics-21.0.1.jar:${env.HOME}/.m2/repository/org/openjfx/javafx-graphics/21.0.1/javafx-graphics-21.0.1-linux.jar:${env.HOME}/.m2/repository/org/openjfx/javafx-web/21.0.1/javafx-web-21.0.1.jar:${env.HOME}/.m2/repository/org/openjfx/javafx-web/21.0.1/javafx-web-21.0.1-linux.jar:${env.HOME}/.m2/repository/org/openjfx/javafx-controls/21.0.1/javafx-controls-21.0.1.jar:${env.HOME}/.m2/repository/org/openjfx/javafx-controls/21.0.1/javafx-controls-21.0.1-linux.jar:${env.HOME}/.m2/repository/org/openjfx/javafx-media/21.0.1/javafx-media-21.0.1.jar:${env.HOME}/.m2/repository/org/openjfx/javafx-media/21.0.1/javafx-media-21.0.1-linux.jar</argument>
+                       <argument>--add-modules</argument>
+                       <argument>ALL-MODULE-PATH</argument>
+                       <argument>-DXXX1=--add-opens=javafx.web/javafx.scene.web=ALL-UNNAMED</argument>
+                       <argument>-DXXX2=--add-opens=javafx.web/com.sun.javafx.scene.web=ALL-UNNAMED</argument>
                        <!--<argument>-javaagent:${project.build.directory}/springloaded.jar</argument>-->
                        <!--<argument>-Xverify:none</argument>-->
                        <argument>-Dbrowser.rootdir=${basedir}/src/main/webapp/</argument>
@@ -191,17 +197,17 @@
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-base</artifactId>
-      <version>20.0.2</version>
+      <version>21.0.1</version>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-graphics</artifactId>
-      <version>20.0.2</version>
+      <version>21.0.1</version>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-web</artifactId>
-      <version>20.0.2</version>
+      <version>21.0.1</version>
     </dependency>
   </dependencies>
   <profiles>

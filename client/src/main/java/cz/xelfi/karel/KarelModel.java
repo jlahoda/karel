@@ -73,7 +73,9 @@ final class KarelModel {
     static Karel onPageLoad(String... args) throws Exception {
         String src = Storage.getDefault().get("source", "\n\n");
         final Scratch s = new Scratch();
-        s.getTown().clear();
+        s.getTowns().clear();
+        s.getTowns().add(new Town());
+        s.setCurrent(0);
 
         karel = new Karel().
                 assignTab("home").
@@ -141,10 +143,10 @@ final class KarelModel {
         }
     }
 
-    @Function
-    static void useTestForScratch(Karel model, TaskTestCase data) {
-        data.getStart().copyTo(model.getScratch().getTown());
-    }
+//    @Function
+//    static void useTestForScratch(Karel model, TaskTestCase data) {
+//        data.getStart().copyTo(model.getScratch().getTown());
+//    }
 
     @Model(className = "Command", properties = {
         @Property(name = "id", type = String.class),
@@ -197,31 +199,31 @@ final class KarelModel {
         return workspace;
     }
 
-    @Function
-    static void loadWorkspace(Karel m) {
-        String xml = Storage.getDefault().get("workspace", null);
-        if (xml != null) {
-            final Workspace w = findWorkspace(m);
-            w.clear();
-            w.loadXML(xml);
-        }
-        String json = Storage.getDefault().get("town", null);
-        if (json != null) {
-            ByteArrayInputStream is = new ByteArrayInputStream(json.getBytes());
-            try {
-                Town town = Models.parse(BrwsrCtx.findDefault(KarelModel.class), Town.class, is);
-                TownModel.load(m.getScratch().getTown(), town);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    @Function
-    static void storeWorkspace(Karel m) {
-        Storage.getDefault().put("workspace", findWorkspace(m).toString());
-        Storage.getDefault().put("town", TownModel.toJSON(m.getScratch().getTown()));
-    }
+//    @Function
+//    static void loadWorkspace(Karel m) {
+//        String xml = Storage.getDefault().get("workspace", null);
+//        if (xml != null) {
+//            final Workspace w = findWorkspace(m);
+//            w.clear();
+//            w.loadXML(xml);
+//        }
+//        String json = Storage.getDefault().get("town", null);
+//        if (json != null) {
+//            ByteArrayInputStream is = new ByteArrayInputStream(json.getBytes());
+//            try {
+//                Town town = Models.parse(BrwsrCtx.findDefault(KarelModel.class), Town.class, is);
+//                TownModel.load(m.getScratch().getTown(), town);
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+//    }
+//
+//    @Function
+//    static void storeWorkspace(Karel m) {
+//        Storage.getDefault().put("workspace", findWorkspace(m).toString());
+//        Storage.getDefault().put("town", TownModel.toJSON(m.getScratch().getTown()));
+//    }
 
     private static void refreshCommands(Karel m, boolean select) {
         Procedure selectedProc = findWorkspace(m).getSelectedProcedure();
@@ -269,7 +271,7 @@ final class KarelModel {
             return;
         }
         List<KarelCompiler> comps = new ArrayList<>();
-        KarelCompiler frame = KarelCompiler.execute(m.getScratch().getTown(), procedure, data.getName());
+        KarelCompiler frame = KarelCompiler.execute(m.getScratch().getTowns().get(m.getScratch().getCurrent()), procedure, data.getName());
         comps.add(frame);
         m.animate(comps);
     }
@@ -364,7 +366,7 @@ final class KarelModel {
                 List<TaskInfo> currentTasks = model.getTasks();
                 int task = currentTasks.indexOf(model.getCurrentInfo());
                 boolean finished = task > 2;
-                Town t = model.getScratch().getTown();
+                Town t = model.getScratch().getTowns().get(model.getScratch().getCurrent());
                 int[] orientation = new int[3];
                 Square robotSquare = TownModel.findKarelSquare(t, orientation);
                 if (task == 1 || task == 2) {
@@ -533,6 +535,7 @@ final class KarelModel {
     @OnReceive(url = "{url}", onError = "errorLoadingTask")
     static void loadTaskDescription(Karel m, TaskDescription td, TaskInfo data) {
         data.setDescription(td);
+        m.getScratch().getTowns().clear();
         for (TaskTestCase c : td.getTests()) {
             Town e = new Town();
             TownModel.load(e, c.getEnd());
@@ -541,13 +544,15 @@ final class KarelModel {
             TownModel.load(s, c.getStart());
             c.setStart(s);
             TaskModel.TestCaseModel.reset(c, true, "");
+            Town scratch = new Town();
+            TownModel.load(scratch, c.getStart());
+            m.getScratch().getTowns().add(scratch);
         }
         m.setCurrentTask(td);
         m.setTab("town");
         if (td.getCommand() != null) {
             edit(m);
         }
-        TownModel.load(m.getScratch().getTown(), td.getTests().get(0).getStart());
     }
 
     static void errorLoadingTask(Karel m, Exception ex) {
