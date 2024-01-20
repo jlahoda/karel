@@ -193,3 +193,6 @@ table.town div.exit:after {
     color: red;
 }
 
+failed {
+    color: red;
+}

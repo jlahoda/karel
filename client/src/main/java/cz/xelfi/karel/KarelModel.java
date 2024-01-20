@@ -365,7 +365,7 @@ final class KarelModel {
             if (currentTask != null) {
                 List<TaskInfo> currentTasks = model.getTasks();
                 int task = currentTasks.indexOf(model.getCurrentInfo());
-                boolean finished = task > 2;
+                boolean[] finished = new boolean[] {task > 0};
                 Town t = model.getScratch().getTowns().get(model.getScratch().getCurrent());
                 int[] orientation = new int[3];
                 Square robotSquare = TownModel.findKarelSquare(t, orientation);
@@ -377,6 +377,7 @@ final class KarelModel {
                             Procedure move = workspace.findProcedure("STEP");
 
                             animateNext(model, Arrays.asList(KarelCompiler.execute(t, move, "move")));
+                            finished[0] = false;
                             return ;
                         }
                     } catch (IndexOutOfBoundsException ex) {
@@ -385,10 +386,23 @@ final class KarelModel {
                 }
                 if (robotSquare.isExit()) {
                     //success!!
-                    model.setExitReached(true);
-                    finished = true;
+                    int testCount = model.getCurrentTask().getTests().size();
+                    Town currentScratch = model.getScratch().getTowns().get(model.getScratch().getCurrent());
+                    int[] karel = TownModel.findKarel(currentScratch);
+
+                    currentScratch.getRows().get(karel[0]).getColumns().get(karel[1]).setRobot(0);
+
+                    if (model.getScratch().getCurrent() + 1 < testCount) {
+                        model.getScratch().setCurrent(model.getScratch().getCurrent() + 1);
+                        invokeScratch(model, new Command(model.getCurrentTask().getCommand(), ""));
+                        model.setExitReached(false);
+                        finished[0] = false;
+                    } else {
+                        model.setExitReached(true);
+                        finished[0] = true;
+                    }
                 }
-                model.setCommandDone(finished);
+                model.setCommandDone(finished[0]);
             }
             model.setRunning(false);
         }
@@ -558,5 +572,17 @@ final class KarelModel {
     static void errorLoadingTask(Karel m, Exception ex) {
         TaskDescription td = new TaskDescription("Error", "Cannot load task: " + ex.getLocalizedMessage(),null, null, 0);
         m.setCurrentTask(td);
+    }
+
+    @Function
+    static void tryAgain(Karel m) {
+        m.getScratch().getTowns().clear();
+        for (TaskTestCase c : m.getCurrentTask().getTests()) {
+            Town scratch = new Town();
+            TownModel.load(scratch, c.getStart());
+            m.getScratch().getTowns().add(scratch);
+        }
+        m.setCommandDone(false);
+        m.setExitReached(false);
     }
 }

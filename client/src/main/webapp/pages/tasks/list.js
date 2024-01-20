@@ -22,8 +22,5 @@
     { "name" : "Make two steps", "url": "03-twosteps.js", "required" : 3 },
     { "name" : "Make six steps", "url": "04-sixsteps.js", "required" : 4 },
     { "name" : "Walk a bit, then turn, and do more walking", "url": "05-walkandturn.js", "required" : 4 },
-    { "name" : "Ke zdi", "url": "06-wall.js", "required" : 6 },
-    { "name" : "Přidej, uber značku", "url": "07-addremove.js", "required" : 6 },
-    { "name" : "Vysbírej značky", "url": "08-pickupall.js", "required" : 6 },
-    { "name" : "Kde domov můj?", "url": "09-home.js", "required" : 9 }
+    { "name" : "Walk a bit, then turn, and do more walking with checks", "url": "06-walkandturnmultiple.js", "required" : 6 }
 ]

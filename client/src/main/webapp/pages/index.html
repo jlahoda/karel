@@ -109,12 +109,13 @@
                 </div>
                 <div class="row" data-bind="visible: $root.commandDone" style="font-size: 64px">
                     <center>
-                    <button type="button" class="btn btn-info" data-bind="click: reset">Znovu
+                    <div class="failed" data-bind="visible: !$root.exitReached()">Eh, didn't reach the exit. Please try again!</div>
+                    <button type="button" class="btn btn-info" data-bind="click: $root.tryAgain">Try again
                         <span class="glyphicon glyphicon-repeat"></span>
                     </button>
                     <span data-bind="visible: $root.exitReached">
                         <!--<span class="glyphicon glyphicon-star" style="color: yellow"> </span>-->
-                        <button type="button" class="btn btn-success" data-bind="click: $root.nextTask">Další úkol &raquo;</button>
+                        <button type="button" class="btn btn-success" data-bind="click: $root.nextTask">Next room &raquo;</button>
                     </span>
                     </center>
                 </div>
