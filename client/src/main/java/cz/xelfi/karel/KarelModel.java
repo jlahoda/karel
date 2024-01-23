@@ -61,6 +61,7 @@ import net.java.html.json.Property;
     @Property(name = "tasksUrl", type = String.class),
     @Property(name = "tasks", type = TaskInfo.class, array = true),
     @Property(name = "exitReached", type = boolean.class),
+    @Property(name = "isFreeForm", type = boolean.class),
     @Property(name = "commandDone", type = boolean.class)
 })
 final class KarelModel {
@@ -393,8 +394,18 @@ final class KarelModel {
                     currentScratch.getRows().get(karel[0]).getColumns().get(karel[1]).setRobot(0);
 
                     if (model.getScratch().getCurrent() + 1 < testCount) {
-                        model.getScratch().setCurrent(model.getScratch().getCurrent() + 1);
-                        invokeScratch(model, new Command(model.getCurrentTask().getCommand(), ""));
+                        int spd = adjustSpeed(getRawSpeed(model));
+                        Procedure procedure = findWorkspace(model).findProcedure(model.getCurrentTask().getCommand());
+                        List<KarelCompiler> comps = new ArrayList<>();
+                        KarelCompiler frame = KarelCompiler.execute(model.getScratch().getTowns().get(model.getScratch().getCurrent() + 1), procedure, model.getCurrentTask().getCommand());
+                        comps.add(frame);
+                        KAREL.schedule(new TimerTask() {
+                            @Override
+                            public void run() {
+                                model.getScratch().setCurrent(model.getScratch().getCurrent() + 1);
+                                model.animate(comps);
+                            }
+                        }, spd);
                         model.setExitReached(false);
                         finished[0] = false;
                     } else {
@@ -410,7 +421,7 @@ final class KarelModel {
 
     void animateNext(final Karel model, List<KarelCompiler> next) {
         model.setRunning(true);
-        int spd = 1000 / model.getSpeed();
+        int spd = getRawSpeed(model);
         if (spd < 0) {
             animate(model, next);
         } else {
@@ -420,12 +431,9 @@ final class KarelModel {
                     return;
                 }
             }
-            if (spd < 3) {
-                spd = 3;
-            }
-            if (spd > 1000) {
-                spd = 1000;
-            }
+
+            spd = adjustSpeed(spd);
+
             KAREL.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -436,6 +444,20 @@ final class KarelModel {
                 }
             }, spd);
         }
+    }
+
+    private static int getRawSpeed(Karel model) {
+        return 1000 / model.getSpeed();
+    }
+
+    private static int adjustSpeed(int spd) {
+        if (spd < 3) {
+            spd = 3;
+        }
+        if (spd > 1000) {
+            spd = 1000;
+        }
+        return spd;
     }
 
     private static List<KarelCompiler> animateOne(final Karel model, List<KarelCompiler> frames) {
@@ -567,6 +589,7 @@ final class KarelModel {
         if (td.getCommand() != null) {
             edit(m);
         }
+        m.setIsFreeForm(td.getCommand().equals("freeform"));
     }
 
     static void errorLoadingTask(Karel m, Exception ex) {
@@ -582,6 +605,7 @@ final class KarelModel {
             TownModel.load(scratch, c.getStart());
             m.getScratch().getTowns().add(scratch);
         }
+        m.getScratch().setCurrent(0);
         m.setCommandDone(false);
         m.setExitReached(false);
     }
