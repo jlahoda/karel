@@ -19,13 +19,13 @@
     "description" : "<p>Uff, thanks for helping me to get out of the room.</p>" +
                     "<p>I am in another room now. I am afraid I'll need your help " +
                     "to get out of not only this room, but to get through a series " +
-                    "of rooms, to get out of this build.</p>" +
+                    "of rooms, to get out of this building.</p>" +
                     "<p>Also, there's a lot of interference here, I'm afraid " +
-                    "you cannot give me commands one by one. I'll need you to " +
+                    "you cannot give me commands one by one anymore. I'll need you to " +
                     "provide me a list of command I can follow.</p>" +
                     "<p>Luckily, some of my sight is still preserved, despite the " +
-                    "interference, so it will be enough to ensure I am facing the " +
-                    "exit.</p>"
+                    "interference, so it will be enough to ensure I am standing next " +
+                    "to the exit, and facing it.</p>"
         , 
     "hint": "Note the exit is behind Karla. Turn her so that she faces back. Do " +
             "it by doing to left turn. Fill the commands in the pre-created " +
