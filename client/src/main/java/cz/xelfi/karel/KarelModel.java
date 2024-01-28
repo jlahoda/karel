@@ -101,10 +101,16 @@ final class KarelModel {
         {
             //temporary: attempt to switch to test tabs:
             Karel m = karel;
-        List<TaskInfo> currentTasks = m.getTasks();
         String tasks = m.getTasksUrl();
         m.loadTasks(tasks, new URI(tasks));
         m.setTab("task");
+        KAREL.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                List<TaskInfo> currentTasks = m.getTasks();
+                chooseTask(m, currentTasks.get(0));
+            }
+        }, 1000);
 //        chooseTask(m, currentTasks.get(0)); //TODO: check all handled
         }
 
@@ -589,7 +595,7 @@ final class KarelModel {
         if (td.getCommand() != null) {
             edit(m);
         }
-        m.setIsFreeForm(td.getCommand().equals("freeform"));
+        m.setIsFreeForm(td.getCommand() != null && td.getCommand().equals("freeform"));
     }
 
     static void errorLoadingTask(Karel m, Exception ex) {
@@ -608,5 +614,10 @@ final class KarelModel {
         m.getScratch().setCurrent(0);
         m.setCommandDone(false);
         m.setExitReached(false);
+    }
+
+    @ModelOperation @Function static void startGame(Karel m) {
+        List<TaskInfo> currentTasks = m.getTasks();
+        chooseTask(m, currentTasks.get(0));
     }
 }

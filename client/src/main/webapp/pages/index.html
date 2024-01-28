@@ -38,7 +38,7 @@
     <body>
         
     <!-- Fixed navbar -->
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<!--    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -56,9 +56,9 @@
             <li data-bind="css: { active : tab === 'edit'}"><a href="#" data-bind="click: changeTabEdit">Kód</a></li>
             <li data-bind="css: { active : tab === 'about'}"><a href="#" data-bind="click: changeTabAbout">Více</a></li>
           </ul>
-        </div><!--/.nav-collapse -->
+        </div><!- -/.nav-collapse - ->
       </div>
-    </div>
+    </div>-->
 
     <template id="home">
         <div class="container theme-showcase" role="main">
@@ -77,21 +77,29 @@
     </template>
     
     <template id="task">
-        <div class="list-group" data-bind="foreach: tasks">
-            <!-- ko if: disabled -->
+<!--        <div class="list-group" data-bind="foreach: tasks">
+            <!- - ko if: disabled - ->
             <a href="#" class="disabled list-group-item">
                <span data-bind="text: name"></span>
                <span class="badge" data-bind="text: required"></span>
             </a>
-            <!-- /ko -->
-            <!-- ko ifnot: disabled -->
+            <!- - /ko - ->
+            <!- - ko ifnot: disabled - ->
             <a class="list-group-item list-group-item-info" href="#" 
                data-bind="click: $root.chooseTask">
                <span class="glyphicon glyphicon-star" style="color: #f5f577" data-bind="visible: awarded"></span>
                <span data-bind="text: name"></span>
                <span class="badge" data-bind="text: required"></span>
             </a>
-            <!-- /ko -->
+            <!- - /ko - ->
+        </div>-->
+        <div style="text-align: center">
+            <div style="font-size: xx-large">
+                Robot Karla is lost in a huge building, and needs help to get out. Will you help her out?
+            </div>
+            <div>
+                <button data-bind="click: $root.startGame">Start!</button>
+            </div>
         </div>
     </template>
 
