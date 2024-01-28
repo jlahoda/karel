@@ -104,13 +104,13 @@ final class KarelModel {
         String tasks = m.getTasksUrl();
         m.loadTasks(tasks, new URI(tasks));
         m.setTab("task");
-//        KAREL.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                List<TaskInfo> currentTasks = m.getTasks();
-//                chooseTask(m, currentTasks.get(0));
-//            }
-//        }, 0);
+        KAREL.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                List<TaskInfo> currentTasks = m.getTasks();
+                chooseTask(m, currentTasks.get(0));
+            }
+        }, 0);
 //        chooseTask(m, currentTasks.get(0)); //TODO: check all handled
         }
 
