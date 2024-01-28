@@ -73,7 +73,7 @@ final class KarelModel {
 
         karel = new Karel().
                 assignTab("home").
-                assignSpeed(50).
+                assignSpeed(10).
                 assignScratch(s).
                 assignSource(src).
                 assignCurrentTask(null).
@@ -450,6 +450,8 @@ final class KarelModel {
     }
 
     private static int adjustSpeed(int spd) {
+        spd *= 3;
+
         if (spd < 3) {
             spd = 3;
         }
