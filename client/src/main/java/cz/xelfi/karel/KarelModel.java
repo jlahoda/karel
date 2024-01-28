@@ -17,13 +17,9 @@
  */
 package cz.xelfi.karel;
 
-import static cz.xelfi.karel.TownModel.findKarel;
-import cz.xelfi.karel.blockly.Execution;
 import cz.xelfi.karel.blockly.Execution.State;
 import cz.xelfi.karel.blockly.Procedure;
 import cz.xelfi.karel.blockly.Workspace;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -31,15 +27,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
-import net.java.html.BrwsrCtx;
 import net.java.html.json.ComputedProperty;
 import net.java.html.json.Function;
 import net.java.html.json.Model;
 import net.java.html.json.ModelOperation;
-import net.java.html.json.Models;
 import net.java.html.json.OnReceive;
 import net.java.html.json.Property;
 
@@ -284,12 +277,12 @@ final class KarelModel {
     }
 
     @Function static void invokeGo(Karel m) {
-        Optional<Command> toInvoke =
-                karel.getCommands()
-                     .stream()
-                     .filter(c -> c.getName().equals(karel.getCurrentTask().getCommand()))
-                     .findAny();
-        toInvoke.ifPresent(c -> invokeScratch(m, c));
+        for (Command c : karel.getCommands()) {
+            if (c.getName().equals(karel.getCurrentTask().getCommand())) {
+                invokeScratch(m, c);
+                return ;
+            }
+        }
     }
 
     @Function static void invoke(Karel m, Command data) {
