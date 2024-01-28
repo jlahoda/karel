@@ -251,7 +251,7 @@
 -->
                 <div style="display: none" data-bind="visible: scratch, with: scratch">
                     <div class="display: none" data-bind="foreach: towns">
-                        <div>Room: <!--ko text: $index --><!--/ko--></div>
+                        <div>Room: <!--ko text: ($index() + 1) --><!--/ko--></div>
                         <div data-bind="with: $data">
                             <div data-bind="template: 'draw-town'"></div>
                         </div>
