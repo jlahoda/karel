@@ -110,7 +110,7 @@ final class KarelModel {
                 List<TaskInfo> currentTasks = m.getTasks();
                 chooseTask(m, currentTasks.get(0));
             }
-        }, 1000);
+        }, 0);
 //        chooseTask(m, currentTasks.get(0)); //TODO: check all handled
         }
 
