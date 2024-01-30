@@ -137,7 +137,7 @@
                         <!-- /ko -->
                         <button type="button" class="btn btn-info"
                           data-bind="click: $root.invokeGo,enable: !$root.running(),visible: command()">
-                            GO!
+                            GO! <span data-bind="text: '(run command named ' + command() + ')'" />
                         </button>
                         <!--
                         <progress max="1000" data-bind="value: speed"></progress>

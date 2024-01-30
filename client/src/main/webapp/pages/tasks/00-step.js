@@ -20,7 +20,7 @@
                     "<p>I'm robot Karla, and I got lost in this building. My navigation " +
                     "circuits are broken, so I cannot navigate properly.</p>" +
                     "<p>Could you please use the commands, and guide me to the exit?</p>",
-    "hint" : "Use the 'turn-left' and 'move' commands to move Karla to the exit.",
+    "hint" : "Use the 'turn-left' and 'move' commands to move Karla to the exit. Note Karla cannot walk into the walls!",
     "tests" : [
         {
             "description" : "Guide Karla to the exit.",
