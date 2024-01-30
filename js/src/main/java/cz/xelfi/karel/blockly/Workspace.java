@@ -21,6 +21,7 @@ import cz.xelfi.karel.blockly.grammar.KarelBaseListener;
 import cz.xelfi.karel.blockly.grammar.KarelLexer;
 import cz.xelfi.karel.blockly.grammar.KarelParser;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
@@ -48,41 +49,14 @@ public final class Workspace {
     public Procedure newProcedure(String commandName) {
         Object workspace = getJs();
         Object[] blocks = getTopBlocks0(workspace, true);
-        List<Object> lastLineBlocks = new ArrayList<>();
-        int lastLineStartY = -1;
-        int lastLineEndY = -1;
+        Arrays.sort(blocks, (b1, b2) -> getBlocksY(b1) - getBlocksY(b2));
+        int currentY = 200;//leave space for the new command
         for (Object b : blocks) {
             int y = getBlocksY(b);
-            int height = getBlocksHeight(b);
-            if (y > lastLineEndY) {
-                lastLineStartY = y;
-                lastLineEndY = y + height;
-                lastLineBlocks.clear();
-                lastLineBlocks.add(b);
-            } else if (y + height < lastLineStartY) {
-                continue;
-            } else {
-                lastLineStartY = Math.min(lastLineStartY, y);
-                lastLineEndY = Math.max(lastLineEndY, y + height);
-                lastLineBlocks.add(b);
-            }
+            moveBy0(b, 0, currentY - y, "new-command");
+            currentY += getBlocksHeight(b);
         }
         Object block = create1(workspace, "karel_funkce", commandName);
-        if (!lastLineBlocks.isEmpty()) {
-            int dx;
-            int dy;
-//            if (lastLineBlocks.size() > 2) {
-                dx = 0;
-                dy = lastLineEndY + 10; //TODO: offset!
-//            } else {
-//                dx = 0;
-//                for (Object b : lastLineBlocks) {
-//                    dx = Math.max(dx, getBlocksX(b) + getBlocksWidth(b) + 10);
-//                }
-//                dy = lastLineStartY;
-//            }
-            moveBy0(block, dx, dy, "whatever");
-        }
         return new Procedure(block, this, commandName, commandName);
     }
 

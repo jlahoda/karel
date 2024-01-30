@@ -110,7 +110,7 @@ Blockly.Blocks['karel_funkce'] = {
     this.appendStatementInput("IFTRUE");
     this.appendDummyInput()
         .appendField(l10n["END"]);
-    this.setColour(65);
+    this.setColour(360);
     this.setTooltip('');
     this.setHelpUrl('help.html');
   }
