@@ -194,9 +194,13 @@
                     <!-- ko foreach: rows -->
                     <tr>
                         <!-- ko foreach: columns -->
-                        <td data-bind="click: $parents[1].rotate">
+                        <td data-bind="click: $parents[1].rotate" style="height: 48px; width: 48px;">
                             <!-- i class="material-icons">&#xE868;</i -->
-                            <div class="karel material-icons robot" data-bind="visible: robot() !== 0, css: ('direction-' + robot())">&#xE868;</div>
+                            <!--<div class="karel material-icons robot" data-bind="visible: robot() !== 0, css: ('direction-' + robot())">&#xE868;</div>-->
+                            <div class="karel material-icons robot" data-bind="visible: robot() === 1"><img width="32" height="32" src="img/karel/karel-vychod.png"/></div>
+                            <div class="karel material-icons robot" data-bind="visible: robot() === 2"><img width="32" height="32" src="img/karel/karel-jih.png"/></div>
+                            <div class="karel material-icons robot" data-bind="visible: robot() === 3"><img width="32" height="32" src="img/karel/karel-zapad.png"/></div>
+                            <div class="karel material-icons robot" data-bind="visible: robot() === 4"><img width="32" height="32" src="img/karel/karel-sever.png"/></div>
                             <div class="karel" data-bind="css: ('mark-' + marks(), exit() ? 'exit' : '')"></div>
                         </td>
                         <!-- /ko -->

@@ -73,14 +73,13 @@ function injectKarel(id, keys, loc) {
             return;
         }
         var s = '<xml>\n' +
-            '<block type="karel_funkce"></block>\n' +
+            '<block type="karel_call"><field name="CALL">' + l10n["NOCMD"] + '</field></block>\n' +
+            '<block type="karel_repeat"></block>\n' +
+            '<block type="karel_while"></block>\n' +
             '<block type="karel_if"></block>\n' +
             '<block type="karel_if_else"></block>\n' +
-            '<block type="karel_while"></block>\n' +
-            '<block type="karel_repeat"></block>\n' +
-            '<block type="karel_call"><field name="CALL">' + l10n["NOCMD"] + '</field></block>\n';
-
-        s += '</xml>\n';
+            '<block type="karel_funkce"></block>\n' +
+            '</xml>\n';
 
         if (modify) {
             workspace.updateToolbox(s);

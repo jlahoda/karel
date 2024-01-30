@@ -588,6 +588,14 @@ final class KarelModel {
         m.setCurrentTask(td);
         m.setTab("town");
         if (td.getCommand() != null) {
+            Workspace w = findWorkspace(m);
+            for (Procedure existing : w.getProcedures()) {
+                if (td.getCommand().equals(existing.getId())) {
+                    existing.setCollapsed(false);
+                } else {
+                    existing.setCollapsed(true);
+                }
+            }
             edit(m);
         }
         m.setIsFreeForm(td.getCommand() != null && td.getCommand().equals("freeform"));

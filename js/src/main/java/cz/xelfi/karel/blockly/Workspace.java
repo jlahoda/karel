@@ -71,16 +71,16 @@ public final class Workspace {
         if (!lastLineBlocks.isEmpty()) {
             int dx;
             int dy;
-            if (lastLineBlocks.size() > 2) {
+//            if (lastLineBlocks.size() > 2) {
                 dx = 0;
                 dy = lastLineEndY + 10; //TODO: offset!
-            } else {
-                dx = 0;
-                for (Object b : lastLineBlocks) {
-                    dx = Math.max(dx, getBlocksX(b) + getBlocksWidth(b) + 10);
-                }
-                dy = lastLineStartY;
-            }
+//            } else {
+//                dx = 0;
+//                for (Object b : lastLineBlocks) {
+//                    dx = Math.max(dx, getBlocksX(b) + getBlocksWidth(b) + 10);
+//                }
+//                dy = lastLineStartY;
+//            }
             moveBy0(block, dx, dy, "whatever");
         }
         return new Procedure(block, this, commandName, commandName);
