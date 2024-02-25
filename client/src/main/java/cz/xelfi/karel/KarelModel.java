@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -708,8 +709,9 @@ final class KarelModel {
     }
 
     @ComputedProperty
-    static String goCommand(String language) {
-        return localize(language, "HARDCODED_Go");
+    static String goCommand(String language, TaskDescription currentTask) {
+        return localize(language, "HARDCODED_Go") + " " +
+               new MessageFormat(localize(language, "HARDCODED_GoHint")).format(new String[] {currentTask != null ? currentTask.getCommand() : ""});
     }
 
     private static final Map<String, Properties> locale2Properties = new HashMap<>();
