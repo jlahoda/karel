@@ -18,7 +18,11 @@
 package cz.xelfi.karel;
 
 import cz.xelfi.karel.blockly.Execution;
+import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import net.java.html.json.ComputedProperty;
 import net.java.html.json.Function;
 import net.java.html.json.Model;
 import net.java.html.json.ModelOperation;
@@ -335,5 +339,24 @@ class TownModel {
             }
         }
         real.setError(simple.getError());
+    }
+
+    @ComputedProperty
+    static String errorText(int error, List<String> errorParams) {
+        String key;
+
+        switch (error) {
+            case 0: return "";
+            case 1: key = "Error_Wall"; break;
+            case 2: key = "Error_NoMarks"; break;
+            case 3: key = "Error_TooManyMarks"; break;
+            case 4: key = "Error_UnknowCommand"; break;
+            default: key = "Error_unknown"; break;
+        }
+
+        String template = KarelModel.XXXlocalize(key);
+
+        return new MessageFormat(template).format(new String[] {errorParams.stream()
+                                                                           .collect(Collectors.joining(""))});
     }
 }

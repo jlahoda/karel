@@ -17,6 +17,12 @@
  */
 package cz.xelfi.karel;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import net.java.html.json.ComputedProperty;
 import net.java.html.json.Function;
 import net.java.html.json.Model;
 import net.java.html.json.Property;
@@ -40,7 +46,8 @@ class TaskModel {
         @Property(name = "hint", type = String.class),
         @Property(name = "command", type = String.class),
         @Property(name = "awarded", type = int.class),
-        @Property(name = "tests", array = true, type = TaskTestCase.class)
+        @Property(name = "tests", array = true, type = TaskTestCase.class),
+        @Property(name = "language", type = String.class),
     })
     static class DescriptionModel {
         static void reset(TaskDescription td, boolean clearState) {
@@ -69,6 +76,16 @@ class TaskModel {
             for (TaskTestCase c : td.getTests()) {
                 TestCaseModel.reset(c, true, null);
             }
+        }
+
+        @ComputedProperty
+        static String localizedDescription(String language, String description) {
+            return KarelModel.localize(language, description);
+        }
+
+        @ComputedProperty
+        static String localizedHint(String language, String hint) {
+            return KarelModel.localize(language, hint);
         }
     }
     

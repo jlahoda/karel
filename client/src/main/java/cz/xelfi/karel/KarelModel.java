@@ -20,19 +20,28 @@ package cz.xelfi.karel;
 import cz.xelfi.karel.blockly.Execution.State;
 import cz.xelfi.karel.blockly.Procedure;
 import cz.xelfi.karel.blockly.Workspace;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import net.java.html.json.ComputedProperty;
 import net.java.html.json.Function;
 import net.java.html.json.Model;
 import net.java.html.json.ModelOperation;
+import net.java.html.json.OnPropertyChange;
 import net.java.html.json.OnReceive;
 import net.java.html.json.Property;
 
@@ -55,7 +64,9 @@ import net.java.html.json.Property;
     @Property(name = "tasks", type = TaskInfo.class, array = true),
     @Property(name = "exitReached", type = boolean.class),
     @Property(name = "isFreeForm", type = boolean.class),
-    @Property(name = "commandDone", type = boolean.class)
+    @Property(name = "commandDone", type = boolean.class),
+    @Property(name = "languages", type = Language.class, array=true),
+    @Property(name = "language", type = String.class)
 })
 final class KarelModel {
     /** @guardedby(this) */
@@ -71,6 +82,21 @@ final class KarelModel {
         s.getTowns().add(new Town());
         s.setCurrent(0);
 
+        Language[] languages = new Language[] {
+            new Language("en"),
+            new Language("cs"),
+            new Language("el")
+        };
+
+        String selected = languages[0].getId();
+        String fromLocale = Locale.getDefault().getLanguage();
+
+        for (Language l : languages) {
+            if (l.getId().equals(fromLocale)) {
+                selected = l.getId();
+            }
+        }
+
         karel = new Karel().
                 assignTab("home").
                 assignSpeed(10).
@@ -79,7 +105,9 @@ final class KarelModel {
                 assignCurrentTask(null).
                 assignCurrentInfo(null).
                 assignSelectedCommand(null).
-                assignTasksUrl("tasks/list.js");
+                assignTasksUrl("tasks/list.js").
+                assignLanguages(languages).
+                assignLanguage(selected);
         KarelModel.compile(karel, false);
         karel.applyBindings();
 
@@ -571,6 +599,7 @@ final class KarelModel {
 
     @OnReceive(url = "{url}", onError = "errorLoadingTask")
     static void loadTaskDescription(Karel m, TaskDescription td, TaskInfo data) {
+        td.setLanguage(m.getLanguage());
         data.setDescription(td);
         m.getScratch().getTowns().clear();
         for (TaskTestCase c : td.getTests()) {
@@ -602,7 +631,7 @@ final class KarelModel {
     }
 
     static void errorLoadingTask(Karel m, Exception ex) {
-        TaskDescription td = new TaskDescription("Error", "Cannot load task: " + ex.getLocalizedMessage(),null, null, 0);
+        TaskDescription td = new TaskDescription("Error", "Cannot load task: " + ex.getLocalizedMessage(),null, null, 0, "en");
         m.setCurrentTask(td);
     }
 
@@ -623,4 +652,110 @@ final class KarelModel {
         List<TaskInfo> currentTasks = m.getTasks();
         chooseTask(m, currentTasks.get(0));
     }
+
+    @OnPropertyChange("language")
+    static void languageSelected(Karel m, String name) {
+        String languageId = m.getLanguage();
+        Optional<Language> language = m.getLanguages().stream().filter(l -> languageId.equals(l.getId())).findFirst();
+        if (language.isEmpty()) {
+            language = m.getLanguages().stream().filter(l -> languageId.equals(l.getName())).findFirst();
+            if (language.isPresent()) {
+                m.setLanguage(language.get().getId());
+            }
+            return ;
+        }
+        for (TaskInfo ti : m.getTasks()) {
+            if (ti.getDescription() != null) {
+                ti.getDescription().setLanguage(languageId);
+            }
+        }
+        Locale.setDefault(Locale.of(languageId));
+    }
+
+    @Model(className="Language", properties = {
+        @Property(name="id", type=String.class)
+    })
+    static final class LanguageDescription {
+        @ComputedProperty
+        static String name(String id) {
+            switch (id) {
+                default:
+                case "en": return "English";
+                case "cs": return "Čeština";
+                case "el": return "Ελλενικά";
+            }
+        }
+    }
+
+    @ComputedProperty
+    static String hardcodedStartText(String language) {
+        return localize(language, "HARDCODED_StartText");
+    }
+
+    @ComputedProperty
+    static String hardcodedStartCommand(String language) {
+        return localize(language, "HARDCODED_StartCommand");
+    }
+
+    @ComputedProperty
+    static String tryAgainCommand(String language) {
+        return localize(language, "HARDCODED_TryAgain");
+    }
+
+    @ComputedProperty
+    static String nextRoomCommand(String language) {
+        return localize(language, "HARDCODED_NextRoom");
+    }
+
+    @ComputedProperty
+    static String goCommand(String language) {
+        return localize(language, "HARDCODED_Go");
+    }
+
+    private static final Map<String, Properties> locale2Properties = new HashMap<>();
+    private static final Map<String, Properties> baseLocale2Properties = new HashMap<>();
+
+    private static Properties getLocaleProperties(String language) {
+        Properties props = locale2Properties.get(language);
+        if (props == null) {
+            props = new Properties();
+            try (InputStream resourceAsStream = TaskModel.class.getResourceAsStream("Bundle_" + language + ".properties")) {
+                if (resourceAsStream != null) {
+                    props.load(resourceAsStream);
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            locale2Properties.put(language, props);
+        }
+
+        return props;
+    }
+
+    private static Properties getBaseLocaleProperties(String language) {
+        Properties baseProps = baseLocale2Properties.get(language);
+        if (baseProps == null) {
+            baseProps = new Properties();
+            try (InputStream resourceAsStream = TaskModel.class.getResourceAsStream("Bundle.properties")) {
+                if (resourceAsStream != null) {
+                    baseProps.load(resourceAsStream);
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            baseLocale2Properties.put(language, baseProps);
+        }
+
+        return baseProps;
+    }
+
+    public static String localize(String language, String key) {
+        return getLocaleProperties(language).getProperty(key,
+                                                         getBaseLocaleProperties(language).getProperty(key, key));
+    }
+
+    public static String XXXlocalize(String key) {
+        return localize(Locale.getDefault().getLanguage(), key);
+    }
+
 }

@@ -16,13 +16,8 @@
  * along with this program. Look for COPYING file in the top folder.
  * If not, see http://opensource.org/licenses/GPL-2.0.
  */
-    "description" : "<p>Ohhh, another room! Thanks for your help so far!</p>" +
-                    "<p>I am afraid the interference is getting worse. My sight is " +
-                    "very impaired now. I am sure it will get better when I get out " +
-                    "of this building. But, for now, I'm afraid I'll need you to " + 
-                    "provide me instructions to reach the exit, not only to stand next to it.</p>",
-    "hint" : "The exit is two rows ahead of Karla. Just define the command so that Karla " +
-             "moves twice.",
+    "description" : "DESC_03",
+    "hint" : "HINT_03",
     "command" : "two-steps",
     "tests" : [
         {

@@ -16,17 +16,8 @@
  * along with this program. Look for COPYING file in the top folder.
  * If not, see http://opensource.org/licenses/GPL-2.0.
  */
-    "description" : "<p>That was good, thank you for walking me through!</p>" +
-                    "<p>We've got another problem, I'm afraid: the interference is " +
-                    "more intensive across next few rooms. Would you please provide " +
-                    "me instructions that will guide me through them?</p>",
-    "hint": "<p>Karla needs to go straight for a bit, then turn right, " +
-            "and the go straight for a bit more. Unlike previous cases, there are multiple " + 
-            "rooms now, and the same instructions must work for all of them. " +
-            "Note that Karla cannot step into a wall - she could scratch herself. " +
-            "Please use the is wall condition to walk until the wall is right " +
-            "in front of her, and then turn. There's no need to stop at exit, " +
-            "Karla will walk through it on her own.</p>",
+    "description" : "DESC_06",
+    "hint": "HINT_06",
     "command" : "check-walk-turn-walk",
     "tests" : [
         {

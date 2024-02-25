@@ -16,10 +16,8 @@
  * along with this program. Look for COPYING file in the top folder.
  * If not, see http://opensource.org/licenses/GPL-2.0.
  */
-    "description" : "<p>Hurray, I am out now. Thanks for freeing me up!</p>" +
-                    "<p>Feel free to give me some commands to walk around!.</p>"
-        ,
-    "hint": "",
+    "description" : "DESC_99",
+    "hint": "HINT_99",
     "command" : "freeform",
     "tests" : [
         {

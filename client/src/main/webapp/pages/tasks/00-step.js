@@ -16,11 +16,8 @@
  * along with this program. Look for COPYING file in the top folder.
  * If not, see http://opensource.org/licenses/GPL-2.0.
  */
-    "description" : "<p>I need your help!</p>" +
-                    "<p>I'm robot Karla, and I got lost in this building. My navigation " +
-                    "circuits are broken, so I cannot navigate properly.</p>" +
-                    "<p>Could you please use the commands, and guide me to the exit?</p>",
-    "hint" : "Use the 'turn-left' and 'move' commands to move Karla to the exit.",
+    "description" : "DESC_00",
+    "hint" : "HINT_00",
     "tests" : [
         {
             "description" : "Guide Karla to the exit.",

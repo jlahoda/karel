@@ -16,13 +16,8 @@
  * along with this program. Look for COPYING file in the top folder.
  * If not, see http://opensource.org/licenses/GPL-2.0.
  */
-    "description" : "<p>Uff, that's another room behind me, thanks!</p>" +
-                    "<p>Please help he through this room as well!</p>",
-    "hint": "<p>In this room, Karla needs to go straight for a bit, then turn right, " +
-            "and the go straight for a bit more. Please use the 'turn-right' command " + 
-            "that you defined before to turn right.</p>" +
-            "You could also observe that Karla in both cases needs to go exactly " + 
-            "6 steps - we have a command for that, why not use it?</p>",
+    "description" : "DESC_05",
+    "hint": "HINT_05",
     "command" : "walk-turn-walk",
     "tests" : [
         {
