@@ -16,14 +16,8 @@
  * along with this program. Look for COPYING file in the top folder.
  * If not, see http://opensource.org/licenses/GPL-2.0.
  */
-    "description" : "Ufff, thanks! Another room, the same task as last time - " + 
-                    "can you please turn me so that I face the exit?",
-    "hint" : "Note the exit is to the right of Karla. But, Karla does not have " + 
-             "a command to turn right, only to turn left. Turning right is the " + 
-             "same as turning left three times. Define the command so that it will turn " + 
-             "Karla left three times. Or, even better, define the command by reusing the " +
-             "'turn-back' command from the previous room: turn right is the same as " +
-             "turning back and then turning left.",
+    "description" : "DESC_02",
+    "hint" : "HINT_02",
     "command" : "turn-right",
     "tests" : [
         {

@@ -16,12 +16,8 @@
  * along with this program. Look for COPYING file in the top folder.
  * If not, see http://opensource.org/licenses/GPL-2.0.
  */
-    "description" : "Thanks for guiding me through that room! Can you guide me " + 
-                    "through this room as well?",
-    "hint": "This is similar to the previous room - Karla just needs to go forward. " +
-            "The difference now is that the exit is far away. Instead of specifying " +
-            "the move command 6 times, use the 'repeat' command to repeat the 'move' " + 
-            "command 6 times.",
+    "description" : "DESC_04",
+    "hint": "HINT_04",
     "command" : "six-steps",
     "tests" : [
         {

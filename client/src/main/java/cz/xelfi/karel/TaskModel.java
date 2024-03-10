@@ -17,6 +17,7 @@
  */
 package cz.xelfi.karel;
 
+import net.java.html.json.ComputedProperty;
 import net.java.html.json.Function;
 import net.java.html.json.Model;
 import net.java.html.json.Property;
@@ -69,6 +70,24 @@ class TaskModel {
             for (TaskTestCase c : td.getTests()) {
                 TestCaseModel.reset(c, true, null);
             }
+        }
+
+        @ComputedProperty
+        static String localizedDescription(String description) {
+            return KarelModel.XXXlocalize(description);
+        }
+
+        @ComputedProperty
+        static String localizedHint(String hint) {
+            return KarelModel.XXXlocalize(hint);
+        }
+
+        @ComputedProperty
+        static String commandLocalized(String command) {
+            String key = "COMMAND_" + command;
+            String localized = KarelModel.XXXlocalize(key);
+
+            return key.equals(localized) ? command : localized;
         }
     }
     

@@ -20,13 +20,20 @@ package cz.xelfi.karel;
 import cz.xelfi.karel.blockly.Execution.State;
 import cz.xelfi.karel.blockly.Procedure;
 import cz.xelfi.karel.blockly.Workspace;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 import net.java.html.json.ComputedProperty;
@@ -278,7 +285,7 @@ final class KarelModel {
 
     @Function static void invokeGo(Karel m) {
         for (Command c : karel.getCommands()) {
-            if (c.getName().equals(karel.getCurrentTask().getCommand())) {
+            if (c.getName().equals(karel.getCurrentTask().getCommandLocalized())) {
                 invokeScratch(m, c);
                 return ;
             }
@@ -309,7 +316,7 @@ final class KarelModel {
     }
 
     @Function static void edit(Karel m) {
-        String cmd = m.getCurrentTask().getCommand();
+        String cmd = m.getCurrentTask().getCommandLocalized();
         Workspace w = findWorkspace(m);
         Procedure proc = w.findProcedure(cmd);
         if (proc == null) {
@@ -394,9 +401,9 @@ final class KarelModel {
 
                     if (model.getScratch().getCurrent() + 1 < testCount) {
                         int spd = adjustSpeed(getRawSpeed(model));
-                        Procedure procedure = findWorkspace(model).findProcedure(model.getCurrentTask().getCommand());
+                        Procedure procedure = findWorkspace(model).findProcedure(model.getCurrentTask().getCommandLocalized());
                         List<KarelCompiler> comps = new ArrayList<>();
-                        KarelCompiler frame = KarelCompiler.execute(model.getScratch().getTowns().get(model.getScratch().getCurrent() + 1), procedure, model.getCurrentTask().getCommand());
+                        KarelCompiler frame = KarelCompiler.execute(model.getScratch().getTowns().get(model.getScratch().getCurrent() + 1), procedure, model.getCurrentTask().getCommandLocalized());
                         comps.add(frame);
                         KAREL.schedule(new TimerTask() {
                             @Override
@@ -587,10 +594,10 @@ final class KarelModel {
         }
         m.setCurrentTask(td);
         m.setTab("town");
-        if (td.getCommand() != null) {
+        if (td.getCommandLocalized()!= null) {
             Workspace w = findWorkspace(m);
             for (Procedure existing : w.getProcedures()) {
-                if (td.getCommand().equals(existing.getId())) {
+                if (td.getCommandLocalized().equals(existing.getId())) {
                     existing.setCollapsed(false);
                 } else {
                     existing.setCollapsed(true);
@@ -598,7 +605,7 @@ final class KarelModel {
             }
             edit(m);
         }
-        m.setIsFreeForm(td.getCommand() != null && td.getCommand().equals("freeform"));
+        m.setIsFreeForm(td.getCommandLocalized()!= null && td.getCommandLocalized().equals("freeform"));
     }
 
     static void errorLoadingTask(Karel m, Exception ex) {
@@ -623,4 +630,77 @@ final class KarelModel {
         List<TaskInfo> currentTasks = m.getTasks();
         chooseTask(m, currentTasks.get(0));
     }
+
+    @ComputedProperty
+    static String hardcodedStartText() {
+        return XXXlocalize("HARDCODED_StartText");
+    }
+
+    @ComputedProperty
+    static String hardcodedStartCommand() {
+        return XXXlocalize("HARDCODED_StartCommand");
+    }
+
+    @ComputedProperty
+    static String tryAgainCommand() {
+        return XXXlocalize("HARDCODED_TryAgain");
+    }
+
+    @ComputedProperty
+    static String nextRoomCommand() {
+        return XXXlocalize("HARDCODED_NextRoom");
+    }
+
+    @ComputedProperty
+    static String goCommand(TaskDescription currentTask) {
+        return XXXlocalize("HARDCODED_Go") + " " +
+               new MessageFormat(XXXlocalize("HARDCODED_GoHint")).format(new String[] {currentTask != null ? currentTask.getCommandLocalized(): ""});
+    }
+
+    private static final Map<String, Properties> locale2Properties = new HashMap<>();
+    private static final Map<String, Properties> baseLocale2Properties = new HashMap<>();
+
+    private static Properties getLocaleProperties(String language) {
+        Properties props = locale2Properties.get(language);
+        if (props == null) {
+            props = new Properties();
+            try (InputStream resourceAsStream = TaskModel.class.getResourceAsStream("Bundle_" + language + ".properties")) {
+                if (resourceAsStream != null) {
+                    props.load(resourceAsStream);
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            locale2Properties.put(language, props);
+        }
+
+        return props;
+    }
+
+    private static Properties getBaseLocaleProperties(String language) {
+        Properties baseProps = baseLocale2Properties.get(language);
+        if (baseProps == null) {
+            baseProps = new Properties();
+            try (InputStream resourceAsStream = TaskModel.class.getResourceAsStream("Bundle.properties")) {
+                if (resourceAsStream != null) {
+                    baseProps.load(resourceAsStream);
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            baseLocale2Properties.put(language, baseProps);
+        }
+
+        return baseProps;
+    }
+
+    private static String localize(String language, String key) {
+        return getLocaleProperties(language).getProperty(key,
+                                                         getBaseLocaleProperties(language).getProperty(key, key));
+    }
+
+    public static String XXXlocalize(String key) {
+        return localize(Locale.getDefault().getLanguage(), key);
+    }
+
 }

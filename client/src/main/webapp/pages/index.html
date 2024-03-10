@@ -36,7 +36,7 @@
         <link href="bootstrap-3.1.1-dist/css/bootstrap-theme.min.css" rel="stylesheet">        
     </head>
     <body>
-        
+
     <!-- Fixed navbar -->
 <!--    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
@@ -94,11 +94,13 @@
             <!- - /ko - ->
         </div>-->
         <div style="text-align: center">
-            <div style="font-size: xx-large">
-                Robot Karla is lost in a huge building, and needs help to get out. Will you help her out?
-            </div>
+<!--            Select language:
+            <select data-bind="foreach: languages, value: language">
+                <option data-bind="text: $data.name">A</option>
+            </select>-->
+            <div style="font-size: xx-large" data-bind="html: hardcodedStartText"></div>
             <div>
-                <button data-bind="click: $root.startGame">Start!</button>
+                <button data-bind="click: $root.startGame, text: $root.hardcodedStartCommand" />
             </div>
         </div>
     </template>
@@ -112,18 +114,18 @@
                     </div>
                 </div>
                 <div class="well">
-                    <p data-bind="html: description"></p>
-                    <p>HINT: <span data-bind="html: hint"/></p> <!--TODO: collapsible-->
+                    <p data-bind="html: localizedDescription"></p>
+                    <p>HINT: <span data-bind="html: localizedHint"/></p> <!--TODO: collapsible-->
                 </div>
                 <div class="row" data-bind="visible: $root.commandDone" style="font-size: 64px">
                     <center>
                     <div class="failed" data-bind="visible: !$root.exitReached() && !$root.isFreeForm()">Eh, didn't reach the exit. Please try again!</div>
-                    <button type="button" class="btn btn-info" data-bind="click: $root.tryAgain">Try again
+                    <button type="button" class="btn btn-info" data-bind="click: $root.tryAgain"><span data-bind="html: $root.tryAgainCommand" />
                         <span class="glyphicon glyphicon-repeat"></span>
                     </button>
                     <span data-bind="visible: $root.exitReached">
                         <!--<span class="glyphicon glyphicon-star" style="color: yellow"> </span>-->
-                        <button type="button" class="btn btn-success" data-bind="click: $root.nextTask">Next room &raquo;</button>
+                        <button type="button" class="btn btn-success" data-bind="click: $root.nextTask, html: $root.nextRoomCommand"></button>
                     </span>
                     </center>
                 </div>
@@ -137,7 +139,7 @@
                         <!-- /ko -->
                         <button type="button" class="btn btn-info"
                           data-bind="click: $root.invokeGo,enable: !$root.running(),visible: command()">
-                            GO! <span data-bind="text: '(run command named ' + command() + ')'" />
+                            <span data-bind="html: $root.goCommand()" />
                         </button>
                         <!--
                         <progress max="1000" data-bind="value: speed"></progress>
@@ -176,19 +178,10 @@
     
     <template id="draw-town">
         <div class="town">
-            <div class="alert alert-warning" data-bind="visible: error() === 1">
-                <strong>Auu!</strong> I ran into the wall!
+            <div class="alert alert-warning" data-bind="visible: error() !== 0">
+                <span data-bind="html: errorText" />
             </div>
-            <div class="alert alert-warning" data-bind="visible: error() === 2">
-                <strong>Pozor!</strong> Nelze sebrat značku!
-            </div>
-            <div class="alert alert-warning" data-bind="visible: error() === 3">
-                <strong>Pozor!</strong> Příliš mnoho značek!
-            </div>
-            <div class="alert alert-warning" data-bind="visible: error() === 4">
-                <strong>Pozor!</strong>
-                Neznámý příkaz <span data-bind="text: errorParams"></span>!
-            </div>
+            <!--<div class="alert alert-warning" data-bind="visible: error() !== 0" />-->
             <table class="town">
                 <tbody>
                     <!-- ko foreach: rows -->
