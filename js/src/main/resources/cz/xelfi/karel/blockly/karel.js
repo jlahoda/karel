@@ -32,6 +32,7 @@ function injectKarel(id, keys, loc) {
     var condDropdown = [
         [l10n["WALL"], "WALL"],
         [l10n["MARK"], "MARK"],
+        [l10n["EXIT"], "EXIT"],
         [l10n["NORTH"], "NORTH"],
         [l10n["SOUTH"], "SOUTH"],
         [l10n["WEST"], "WEST"],

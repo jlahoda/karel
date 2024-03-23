@@ -36,7 +36,7 @@ public final class Execution {
     }
 
     public enum Condition {
-        WALL, MARK, NORTH, SOUTH, WEST, EAST;
+        WALL, MARK, EXIT, NORTH, SOUTH, WEST, EAST;
     }
 
     public enum State {

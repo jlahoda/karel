@@ -179,6 +179,7 @@ final class KarelModel {
         chooseTask(m, currentTasks.get(idx + 1)); //TODO: check all handled
         m.setExitReached(false);
         m.setCommandDone(false);
+        m.getScratch().setCurrent(0);
     }
 
     @Function static void changeTabEdit(Karel m) {

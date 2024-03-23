@@ -66,6 +66,9 @@ class TownModel {
             final int m = town.getRows().get(xyd[1]).getColumns().get(xyd[0]).getMarks();
             return m > 0 && m < 100;
         }
+        if (Execution.Condition.EXIT == cond) {
+            return town.getRows().get(xyd[1]).getColumns().get(xyd[0]).isExit();
+        }
         if (Execution.Condition.WALL != cond) {
             throw new IllegalStateException("" + cond);
         }
@@ -107,6 +110,10 @@ class TownModel {
     static class SquareModel {
         static boolean isEmpty(Square sq) {
             return sq.getRobot() == 0 && sq.getMarks() == 0;
+        }
+        @ComputedProperty
+        static boolean isWall(Square sq) {
+            return sq.getMarks() == 111;
         }
     }
 
