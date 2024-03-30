@@ -34,6 +34,7 @@ import java.util.ListIterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import net.java.html.json.ComputedProperty;
@@ -53,6 +54,7 @@ import net.java.html.json.Property;
     @Property(name = "currentInfo", type = TaskInfo.class),
     @Property(name = "scratch", type = Scratch.class),
     @Property(name = "commands", type = Command.class, array = true),
+    @Property(name = "manualCommands", type = Command.class, array = true),
     @Property(name = "selectedCommand", type = Command.class),
     @Property(name = "source", type = String.class),
     @Property(name = "speed", type = int.class),
@@ -234,6 +236,8 @@ final class KarelModel {
 //        Storage.getDefault().put("town", TownModel.toJSON(m.getScratch().getTown()));
 //    }
 
+    private static final Set<String> MANUAL_COMMANDS = Set.of("STEP", "LEFT");
+
     private static void refreshCommands(Karel m, boolean select) {
         Procedure selectedProc = findWorkspace(m).getSelectedProcedure();
         Command selectedCommand = null;
@@ -256,6 +260,13 @@ final class KarelModel {
             arr.subList(index, arr.size()).clear();
         }
         m.assignCommands(arr.toArray(new Command[0]));
+        List<Command> manualCommands = new ArrayList<>();
+        for (Command c : arr) {
+            if (MANUAL_COMMANDS.contains(c.getId())) {
+                manualCommands.add(c);
+            }
+        }
+        m.assignManualCommands(manualCommands.toArray(new Command[0]));
         if (select) {
             m.setSelectedCommand(selectedCommand);
         }

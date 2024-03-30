@@ -132,7 +132,7 @@
                 <div class="row" data-bind="visible: !$root.commandDone()">
                     <div class="col-sm-12" style="text-align: center">
                         <p></p>
-                        <!-- ko foreach: $root.commands -->
+                        <!-- ko foreach: $root.manualCommands -->
                         <button type="button" class="btn btn-info" 
                           data-bind="text: name,click: $root.invokeManual,enable: !$root.running(),visible: !$parent.command()">
                         </button>
