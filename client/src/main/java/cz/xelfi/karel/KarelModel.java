@@ -177,7 +177,16 @@ final class KarelModel {
     @ModelOperation @Function static void nextTask(Karel m) throws URISyntaxException {
         List<TaskInfo> currentTasks = m.getTasks();
         int idx = currentTasks.indexOf(m.getCurrentInfo());
-        chooseTask(m, currentTasks.get(idx + 1)); //TODO: check all handled
+        chooseTask(m, currentTasks.get(idx + 1));
+        m.setExitReached(false);
+        m.setCommandDone(false);
+        m.getScratch().setCurrent(0);
+    }
+
+    @ModelOperation @Function static void goToTask(Karel m, TaskInfo data) throws URISyntaxException {
+        List<TaskInfo> currentTasks = m.getTasks();
+        int idx = currentTasks.indexOf(data);
+        chooseTask(m, currentTasks.get(idx));
         m.setExitReached(false);
         m.setCommandDone(false);
         m.getScratch().setCurrent(0);

@@ -37,6 +37,26 @@
     </head>
     <body>
 
+<div id="taskSideBar" class="sidebar">
+    <script>
+        function returnGoToTask(root, data) {
+            return function() {
+                root.goToTask(data);
+            };
+        }
+    </script>
+    <div data-bind="foreach: tasks">
+        <a href="#" data-bind="click: returnGoToTask($root, $data)"><span data-bind="html: ($index() + 1) + '. ' + $data.displayName()"></span></a>
+        <!---->
+    </div>
+</div>
+<div id="taskSideBarWidthEstimate" class="width-estimate">
+    <div data-bind="foreach: tasks">
+        <a href="#"><span data-bind="html: name"></span></a>
+    </div>
+</div>
+        <div id="main">
+            <button id="open-sidebar-button" class="openbtn" onclick="openSideBar()">&gt;</button>
     <!-- Fixed navbar -->
 <!--    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
@@ -292,13 +312,36 @@
         </div>
         </div>
     </div>
-
+        </div>
     <!-- boot bck2brwsr -->
     <script type="text/javascript" src="bck2brwsr.js"></script>
     <script>
         var vm = bck2brwsr('karel.js');
         var c = vm.loadClass('cz.xelfi.karel.BrowserMain');
         c.invoke('main');
+    </script>
+    <!--sidebar based on: https://www.w3schools.com/howto/howto_js_collapse_sidebar.asp -->
+    <script>
+
+function openSideBar() {
+  var windowWidth = $(window).width();
+  var desiredWidth = Math.min(document.getElementById("taskSideBarWidthEstimate").scrollWidth, windowWidth / 3);
+  var width = desiredWidth + "px";
+  document.getElementById("taskSideBar").style.width = width;
+  document.getElementById("main").style.marginLeft = width;
+  document.getElementById("open-sidebar-button").style.left = width;
+  document.getElementById("open-sidebar-button").onclick = closeSideBar;
+  document.getElementById("open-sidebar-button").textContent = "<";
+}
+
+/* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+function closeSideBar() {
+  document.getElementById("taskSideBar").style.width = "0";
+  document.getElementById("main").style.marginLeft = "0";
+  document.getElementById("open-sidebar-button").style.left = "0";
+  document.getElementById("open-sidebar-button").onclick = openSideBar;
+  document.getElementById("open-sidebar-button").textContent = ">";
+}
     </script>
 
 

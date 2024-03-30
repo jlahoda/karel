@@ -35,6 +35,11 @@ import net.java.html.json.Property;
     @Property(name = "description", type = TaskDescription.class)
 })
 class TaskModel {
+    @ComputedProperty
+    static String displayName(String name) {
+        return KarelModel.XXXlocalize(name);
+    }
+
     @Model(className = "TaskDescription", properties = {
         @Property(name = "name", type = String.class),
         @Property(name = "description", type = String.class),
