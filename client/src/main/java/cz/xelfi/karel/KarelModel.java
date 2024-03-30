@@ -246,7 +246,7 @@ final class KarelModel {
 //        Storage.getDefault().put("town", TownModel.toJSON(m.getScratch().getTown()));
 //    }
 
-    private static final Set<String> MANUAL_COMMANDS = new HashSet<>(Arrays.asLists("STEP", "LEFT"));
+    private static final Set<String> MANUAL_COMMANDS = new HashSet<>(Arrays.asList("STEP", "LEFT"));
 
     private static void refreshCommands(Karel m, boolean select) {
         Procedure selectedProc = findWorkspace(m).getSelectedProcedure();
