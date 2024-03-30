@@ -62,7 +62,8 @@ import net.java.html.json.Property;
     @Property(name = "tasks", type = TaskInfo.class, array = true),
     @Property(name = "exitReached", type = boolean.class),
     @Property(name = "isFreeForm", type = boolean.class),
-    @Property(name = "commandDone", type = boolean.class)
+    @Property(name = "commandDone", type = boolean.class),
+    @Property(name = "stopCalled", type = boolean.class)
 })
 final class KarelModel {
     /** @guardedby(this) */
@@ -365,6 +366,13 @@ final class KarelModel {
     }
 
     @ModelOperation void animate(final Karel model, List<KarelCompiler> frames) {
+        if (model.isStopCalled()) {
+            model.setCommandDone(false);
+            model.setExitReached(false);
+            model.setRunning(false);
+            model.setStopCalled(false);
+            return ;
+        }
         final List<KarelCompiler> next = animateOne(model, frames);
         if (!next.isEmpty()) {
             animateNext(model, next);
@@ -627,6 +635,11 @@ final class KarelModel {
         m.setExitReached(false);
     }
 
+    @Function
+    static void doStop(Karel m) {
+        m.setStopCalled(true);
+    }
+
     @ModelOperation @Function static void startGame(Karel m) {
         List<TaskInfo> currentTasks = m.getTasks();
         chooseTask(m, currentTasks.get(0));
@@ -650,6 +663,11 @@ final class KarelModel {
     @ComputedProperty
     static String nextRoomCommand() {
         return XXXlocalize("HARDCODED_NextRoom");
+    }
+
+    @ComputedProperty
+    static String stopCommand() {
+        return XXXlocalize("HARDCODED_Stop");
     }
 
     @ComputedProperty
