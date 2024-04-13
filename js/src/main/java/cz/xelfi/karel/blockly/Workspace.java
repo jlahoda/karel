@@ -50,7 +50,7 @@ public final class Workspace {
         Object workspace = getJs();
         Object[] blocks = getTopBlocks0(workspace, true);
         Arrays.sort(blocks, (b1, b2) -> getBlocksY(b1) - getBlocksY(b2));
-        int currentY = 200;//leave space for the new command
+        int currentY = 400;//leave space for the new command
         for (Object b : blocks) {
             int y = getBlocksY(b);
             moveBy0(b, 0, currentY - y, "new-command");
