@@ -27,5 +27,7 @@
     { "name" : "Walk a bit, then turn, and do more walking", "url": "05-walkandturn.js", "required" : 4 },
     { "name" : "Walk a bit, then turn, and do more walking with checks", "url": "06-walkandturnmultiple.js", "required" : 6 },
     { "name" : "Follow a hall to the exit", "url": "08-simplepathtoexit.js", "required" : 6 },
+    { "name" : "Walk through a maze of hallwals, to find the exit", "url": "09-maze.js", "required" : 6 },
+    { "name" : "Find a wall, then an entrace to a maze, and the walk through the maze", "url": "10-maze2.js", "required" : 6 },
     { "name" : "Freeform commands", "url": "99-freeform.js", "required" : 6 }
 ]
