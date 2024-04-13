@@ -27,5 +27,7 @@
     { "name" : "NAME_05", "url": "05-walkandturn.js", "required" : 4 },
     { "name" : "NAME_06", "url": "06-walkandturnmultiple.js", "required" : 6 },
     { "name" : "NAME_08", "url": "08-simplepathtoexit.js", "required" : 6 },
+    { "name" : "NAME_09", "url": "09-maze.js", "required" : 6 },
+    { "name" : "NAME_10", "url": "10-maze2.js", "required" : 6 },
     { "name" : "NAME_99", "url": "99-freeform.js", "required" : 6 }
 ]
