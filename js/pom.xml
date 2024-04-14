@@ -62,6 +62,7 @@
                   <systemPropertyVariables>
                       <fxpresenter.headless>false</fxpresenter.headless>
                   </systemPropertyVariables>
+                  <forkMode>pertest</forkMode>
               </configuration>
           </plugin>
           <plugin>

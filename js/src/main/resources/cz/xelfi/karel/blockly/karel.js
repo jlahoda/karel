@@ -69,12 +69,12 @@ function injectKarel(id, keys, loc) {
     var onSelectListener = null;
 
     function toolbox(modify) {
-        if (onSelectListener && modify && 'selected' === modify.element) {
+        if (onSelectListener && modify && 'selected' === modify.type) {
             onSelectListener(['blocklySelectChange', modify.oldValue, modify.newValue]);
             return;
         }
         var s = '<xml>\n' +
-            '<block type="karel_call"><field name="CALL">' + l10n["NOCMD"] + '</field></block>\n' +
+            '<block type="karel_call"><field name="CALL">NOCMD</field></block>\n' +
             '<block type="karel_repeat"></block>\n' +
             '<block type="karel_while"></block>\n' +
             '<block type="karel_if"></block>\n' +
@@ -197,7 +197,7 @@ Blockly.Blocks['karel_call'] = {
     this.appendDummyInput()
         .appendField("     ");
     this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown(procedures), "CALL");
+        .appendField(new Blockly.FieldDropdown(function () { return [[l10n['NOCMD'], 'NOCMD', null]].concat(procedures());}), "CALL");
     this.appendDummyInput()
         .setAlign(Blockly.ALIGN_RIGHT)
         .appendField("     ");
@@ -221,7 +221,7 @@ Blockly.Blocks['karel_call'] = {
     }
 
     function loadXml(xml) {
-        Blockly.Xml.domToWorkspace(Blockly.Xml.textToDom(xml), workspace);
+        Blockly.Xml.domToWorkspace(Blockly.utils.xml.textToDom(xml), workspace);
     }
     
     function toXml() {
