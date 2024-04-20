@@ -261,6 +261,14 @@ public final class Workspace {
         clear0(getJs());
     }
 
+    Object saveBlock(Object block) {
+        return saveBlock0(getJs(), block);
+    }
+
+    public void loadBlock(String data) {
+        loadBlock0(getJs(), data);
+    }
+
     public void loadXML(String xml) {
         load0(getJs(), xml);
     }
@@ -296,6 +304,12 @@ public final class Workspace {
 
     @JavaScriptBody(args = { "workspace" }, body = "workspace.clear();", wait4js = false)
     private static native void clear0(Object workspace);
+
+    @JavaScriptBody(args = { "workspace", "block" }, body = "return workspace.saveBlock(block);")
+    private static native String saveBlock0(Object workspace, Object block);
+
+    @JavaScriptBody(args = { "workspace", "data" }, body = "workspace.loadBlock(data);")
+    private static native String loadBlock0(Object workspace, String data);
 
     @JavaScriptBody(args = { "workspace", "xml" }, body =
         "workspace.loadXml(xml);"
@@ -404,7 +418,7 @@ public final class Workspace {
         @JavaScriptBody(args = {}, body = "")
         private static native void init0();
 
-        @JavaScriptBody(args = {"karel", "id", "keys", "values"}, wait4js = true, body
+       @JavaScriptBody(args = {"karel", "id", "keys", "values"}, wait4js = true, body
             = "return karel(id, keys, values);"
         )
         private static native Object create0(Object karel, String id, Object[] keys, Object values);

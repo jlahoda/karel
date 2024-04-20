@@ -19,6 +19,7 @@
     "description" : "DESC_02",
     "hint" : "HINT_02",
     "command" : "turn-right",
+    "solution" : '{"type":"karel_funkce","id":"[O#K*O/J=o!EXE]J].11","fields":{"NAME":"turn-right"},"inputs":{"IFTRUE":{"block":{"type":"karel_call","id":"JAIMknD;*AZ+Mj:Qik2u","fields":{"CALL":"turn-back"},"next":{"block":{"type":"karel_call","id":"``r$=Kx[YDlRr@$Y_`/$","fields":{"CALL":"LEFT"}}}}}}}',
     "tests" : [
         {
             "description" : "Kouká na sever. Pokročí.",

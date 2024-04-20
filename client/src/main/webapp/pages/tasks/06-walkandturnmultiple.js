@@ -19,6 +19,7 @@
     "description" : "DESC_06",
     "hint": "HINT_06",
     "command" : "check-walk-turn-walk",
+    "solution" : '{"type":"karel_funkce","id":"L8HE=~V=qCHAXh;n~PHd","fields":{"NAME":"check-walk-turn-walk"},"inputs":{"IFTRUE":{"block":{"type":"karel_while","id":"k07iS2RED_0ee~o#(p(%","fields":{"NEG":"FALSE","COND":"WALL"},"inputs":{"IFTRUE":{"block":{"type":"karel_call","id":"N#hJW1I?vkF%aIY1vRa$","fields":{"CALL":"STEP"}}}},"next":{"block":{"type":"karel_call","id":"Yap1qQU=JxZZdg-Nt.fv","fields":{"CALL":"turn-right"},"next":{"block":{"type":"karel_while","id":"fNr=9#K8X}5,MqSJgmBm","fields":{"NEG":"FALSE","COND":"EXIT"},"inputs":{"IFTRUE":{"block":{"type":"karel_call","id":"Y+,$SRX@7I[;4$c09^~h","fields":{"CALL":"STEP"}}}}}}}}}}}}',
     "tests" : [
         {
             "description" : "Krok na sever.",

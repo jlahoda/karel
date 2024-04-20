@@ -19,6 +19,7 @@
     "description" : "DESC_08",
     "hint" : "HINT_08",
     "command" : "path-to-exit",
+    "solution" : ' {"type":"karel_funkce","id":"8pMTKc2.:CL1h.kmEx3(","fields":{"NAME":"path-to-exit"},"inputs":{"IFTRUE":{"block":{"type":"karel_while","id":"2%u$INaq4a)@N+jd^^hC","fields":{"NEG":"FALSE","COND":"EXIT"},"inputs":{"IFTRUE":{"block":{"type":"karel_while","id":"O@iYrTPYmMe5nKNe4%qe","fields":{"NEG":"FALSE","COND":"WALL"},"inputs":{"IFTRUE":{"block":{"type":"karel_call","id":"N1*KBp+Iuy5DF5v$L1]q","fields":{"CALL":"STEP"}}}},"next":{"block":{"type":"karel_if_else","id":"j1U@KAr|E95?a%Hc^Sn1","fields":{"NEG":"TRUE","COND":"EAST"},"inputs":{"IFTRUE":{"block":{"type":"karel_call","id":"7z77Q*t6;*J6_yoAv?~C","fields":{"CALL":"LEFT"}}},"IFFALSE":{"block":{"type":"karel_call","id":"Hu}RXfAY[/[;q7?pHX^@","fields":{"CALL":"turn-right"}}}}}}}}}}}}}',
     "tests" : [
         {
             "description" : "Polož značku, když je políčko prázdné.",

@@ -19,6 +19,8 @@
     "description" : "DESC_09",
     "hint" : "HINT_09",
     "command" : "find-exit",
+    "solution" : '{"type":"karel_funkce","id":"+j{GD/z=E@%hW,Sj+*IO","fields":{"NAME":"find-exit"},"inputs":{"IFTRUE":{"block":{"type":"karel_while","id":"?RH#;U[J?Cb23fmR3L/f","fields":{"NEG":"FALSE","COND":"EXIT"},"inputs":{"IFTRUE":{"block":{"type":"karel_call","id":"hDjYB0K4Fqi/X2JFVC:6","fields":{"CALL":"turn-right"},"next":{"block":{"type":"karel_while","id":"%DQYg7c+Qu)Imgw=PIEp","fields":{"NEG":"TRUE","COND":"WALL"},"inputs":{"IFTRUE":{"block":{"type":"karel_call","id":"hvD%S%[%Sl0/)mX]rGk@","fields":{"CALL":"LEFT"}}}},"next":{"block":{"type":"karel_call","id":"T@S+hyff41)d`bAS}=o4","fields":{"CALL":"STEP"}}}}}}}}}}}}',
+    "solution2" : ' {"type":"karel_funkce","id":"#}Q)l9zF4.2:7Q?[mCBC","fields":{"NAME":"find-exit"},"inputs":{"IFTRUE":{"block":{"type":"karel_while","id":"xPkU0$t3KHfhqO/cY8{K","fields":{"NEG":"FALSE","COND":"WALL"},"inputs":{"IFTRUE":{"block":{"type":"karel_call","id":"lJeDS#-5ecKYhf$7PK7~","fields":{"CALL":"STEP"},"next":{"block":{"type":"karel_call","id":"8j`iPxX:-P=13$WV+U=a","fields":{"CALL":"turn-right"},"next":{"block":{"type":"karel_while","id":"HFe!o:/v9d:Pvv*-[OTq","fields":{"NEG":"TRUE","COND":"WALL"},"inputs":{"IFTRUE":{"block":{"type":"karel_call","id":"XUd-XV0ieF7JM~u3d7*e","fields":{"CALL":"LEFT"}}}}}}}}}}}}}}}',
     "tests" : [
         {
             "description" : "Otoč se a jdi domů.",

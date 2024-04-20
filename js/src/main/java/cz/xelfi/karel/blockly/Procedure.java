@@ -67,6 +67,14 @@ public final class Procedure {
         }
     }
 
+    public Object dump2JSON() {
+        if (js != null) {
+            return ws.saveBlock(js);
+        } else {
+            return "";
+        }
+    }
+
     @Override
     public String toString() {
         return "Procedure[" + id + "]";

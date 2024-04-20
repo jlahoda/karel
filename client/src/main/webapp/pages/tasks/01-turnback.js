@@ -19,6 +19,7 @@
     "description" : "DESC_01",
     "hint": "HINT_01",
     "command" : "turn-back",
+    "solution" : '{"type":"karel_funkce","id":"mO=+kAnsiA_lWC?hO3oi","fields":{"NAME":"turn-back"},"inputs":{"IFTRUE":{"block":{"type":"karel_call","id":"5G7yQlA~W-$5h+/4|1m|","fields":{"CALL":"LEFT"},"next":{"block":{"type":"karel_call","id":"Xssa:j908/=7Zz0Z,8px","fields":{"CALL":"LEFT"}}}}}}}',
     "tests" : [
         {
             "description" : "Turn Karla so that she faces the exit.",

@@ -19,6 +19,7 @@
     "description" : "DESC_04",
     "hint": "HINT_04",
     "command" : "six-steps",
+    "solution" : '{"type":"karel_funkce","id":"a:9JCx:~*_85D|+vNqVS","fields":{"NAME":"six-steps"},"inputs":{"IFTRUE":{"block":{"type":"karel_repeat","id":"mF(dALmG$O#^5-i/OJ!E","fields":{"N":"6"},"inputs":{"IFTRUE":{"block":{"type":"karel_call","id":"GB}NvBM[}xgph1S=KvmM","fields":{"CALL":"STEP"}}}}}}}}',
     "tests" : [
         {
             "description" : "Šest kroků na sever.",

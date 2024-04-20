@@ -240,6 +240,15 @@ Blockly.Blocks['karel_call'] = {
         return workspace.clear();
     }
 
+    function saveBlock(block) {
+        var v = JSON.stringify(Blockly.serialization.blocks.save(block));
+        return v;
+    }
+
+    function loadBlock(data) {
+        var load = Blockly.serialization.blocks.append(JSON.parse(data), workspace);
+    }
+
     function flatProcedures() {
         var arr = procedures();
         var res = [];
@@ -356,6 +365,8 @@ Blockly.Blocks['karel_call'] = {
 
     return {
         'clear' : clear,
+        'saveBlock' : saveBlock,
+        'loadBlock' : loadBlock,
         'loadXml' : loadXml,
         'toXml' : toXml,
         'procedures': flatProcedures,

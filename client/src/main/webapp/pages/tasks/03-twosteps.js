@@ -19,6 +19,7 @@
     "description" : "DESC_03",
     "hint" : "HINT_03",
     "command" : "two-steps",
+    "solution" : '{"type":"karel_funkce","id":"V?XcQy6KSNE=w|fxQRBJ","fields":{"NAME":"two-steps"},"inputs":{"IFTRUE":{"block":{"type":"karel_call","id":"OEv!g6}(AWsYo9*d#hG/","fields":{"CALL":"STEP"},"next":{"block":{"type":"karel_call","id":"%cD5@efaf`)xX73dH:3:","fields":{"CALL":"STEP"}}}}}}}',
     "tests" : [
         {
             "description" : "Kouká na sever. Otočí se na východ.",

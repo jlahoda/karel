@@ -178,6 +178,13 @@ final class KarelModel {
     }
 
     @ModelOperation @Function static void nextTask(Karel m) throws URISyntaxException {
+        //development: dump the content of the current command
+//        for (Procedure p : workspace.getProcedures()) {
+//            if (p.getName().equals(karel.getCurrentTask().getCommandLocalized())) {
+//                System.err.println("p: " + p.dump2JSON());
+//            }
+//        }
+
         List<TaskInfo> currentTasks = m.getTasks();
         int idx = currentTasks.indexOf(m.getCurrentInfo());
         chooseTask(m, currentTasks.get(idx + 1)); //TODO: check all handled
@@ -630,7 +637,7 @@ final class KarelModel {
     }
 
     static void errorLoadingTask(Karel m, Exception ex) {
-        TaskDescription td = new TaskDescription("Error", "Cannot load task: " + ex.getLocalizedMessage(),null, null, 0);
+        TaskDescription td = new TaskDescription("Error", "Cannot load task: " + ex.getLocalizedMessage(),null, null, null, 0);
         m.setCurrentTask(td);
     }
 
@@ -645,6 +652,17 @@ final class KarelModel {
         m.getScratch().setCurrent(0);
         m.setCommandDone(false);
         m.setExitReached(false);
+    }
+
+    @Function
+    static void giveUp(Karel m) {
+        tryAgain(m);
+        for (Procedure p : workspace.getProcedures()) {
+            if (p.getName().equals(karel.getCurrentTask().getCommandLocalized())) {
+                p.dispose();
+            }
+        }
+        workspace.loadBlock(karel.getCurrentTask().getSolution());
     }
 
     @Function
@@ -670,6 +688,11 @@ final class KarelModel {
     @ComputedProperty
     static String tryAgainCommand() {
         return XXXlocalize("HARDCODED_TryAgain");
+    }
+
+    @ComputedProperty
+    static String giveUpCommand() {
+        return XXXlocalize("HARDCODED_GiveUp");
     }
 
     @ComputedProperty

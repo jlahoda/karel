@@ -19,6 +19,7 @@
     "description" : "DESC_10",
     "hint" : "HINT_10",
     "command" : "find-exit-from-middle",
+    "solution" : '{"type":"karel_funkce","id":"{k1nSo(m0%M]tiS7GTu5","fields":{"NAME":"find-exit-from-middle"},"inputs":{"IFTRUE":{"block":{"type":"karel_while","id":"Mvuedtw%t~^Dvn6w${Yb","fields":{"NEG":"FALSE","COND":"WALL"},"inputs":{"IFTRUE":{"block":{"type":"karel_call","id":"@I6$@?i!(R*[e%*^=:(0","fields":{"CALL":"STEP"}}}},"next":{"block":{"type":"karel_while","id":"rEL-NLd~.naDOVYhW1~w","fields":{"NEG":"TRUE","COND":"WALL"},"inputs":{"IFTRUE":{"block":{"type":"karel_call","id":"Sc_N#|eMXx=:oLEt3a#I","fields":{"CALL":"LEFT"}}}},"next":{"block":{"type":"karel_call","id":"B48VuI^$.]u8T/$w.E|z","fields":{"CALL":"find-exit"}}}}}}}}}',
     "tests" : [
         {
             "description" : "Otoč se a jdi domů.",
