@@ -127,7 +127,7 @@
                         <!--<span class="glyphicon glyphicon-star" style="color: yellow"> </span>-->
                         <button type="button" class="btn btn-success" data-bind="click: $root.nextTask, html: $root.nextRoomCommand"></button>
                     </span>
-                    <button type="button" class="btn btn-default" data-bind="click: $root.giveUp, visible: solution() != null"><span data-bind="html: $root.giveUpCommand" />
+                    <button type="button" class="btn btn-default" data-bind="click: $root.giveUp, visible: solution() != null && !$root.exitReached() && !$root.isFreeForm()"><span data-bind="html: $root.giveUpCommand" />
                     </button>
                     </center>
                 </div>
@@ -140,7 +140,7 @@
                         </button>
                         <!-- /ko -->
                         <button type="button" class="btn btn-info"
-                          data-bind="click: $root.invokeGo,enable: !$root.running(),visible: command()">
+                          data-bind="click: $root.invokeGo,enable: !$root.running() && !$root.primaryCommandEmpty(), visible: command()">
                             <span data-bind="html: $root.goCommand()" />
                         </button>
                         <button type="button" class="btn btn-danger" data-bind="click: $root.doStop,visible: command() && $root.running(), html: $root.stopCommand,enable: !$root.stopCalled()"></button>
