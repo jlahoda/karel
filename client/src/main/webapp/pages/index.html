@@ -127,7 +127,7 @@
                         <!--<span class="glyphicon glyphicon-star" style="color: yellow"> </span>-->
                         <button type="button" class="btn btn-success" data-bind="click: $root.nextTask, html: $root.nextRoomCommand"></button>
                     </span>
-                    <button type="button" class="btn btn-default" data-bind="click: $root.giveUp, visible: solution() != null && !$root.exitReached() && !$root.isFreeForm()"><span data-bind="html: $root.giveUpCommand" />
+                    <button type="button" class="btn btn-default" data-bind="click: $root.giveUp, visible: solution() !== null && !$root.exitReached() && !$root.isFreeForm()"><span data-bind="html: $root.giveUpCommand" />
                     </button>
                     </center>
                 </div>
