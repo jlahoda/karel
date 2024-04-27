@@ -85,10 +85,7 @@ class TaskModel {
 
         @ComputedProperty
         static String commandLocalized(String command) {
-            String key = "COMMAND_" + command;
-            String localized = KarelModel.XXXlocalize(key);
-
-            return key.equals(localized) ? command : localized;
+            return KarelModel.localizedCommand(command);
         }
     }
     

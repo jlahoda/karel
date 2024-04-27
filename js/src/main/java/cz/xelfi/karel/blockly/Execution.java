@@ -215,7 +215,7 @@ public final class Execution {
             } else {
                 END: for (;;) {
                     current = info.parent;
-                    Info parentInfo = new Info(current);
+                    Info parentInfo = current != null ? new Info(current) : info;
                     switch (parentInfo.type) {
                         case "karel_funkce":
                             return (State) (current = State.FINISHED);

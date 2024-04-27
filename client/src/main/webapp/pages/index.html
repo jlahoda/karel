@@ -119,7 +119,7 @@
                 </div>
                 <div class="row" data-bind="visible: $root.commandDone" style="font-size: 64px">
                     <center>
-                    <div class="failed" data-bind="visible: !$root.exitReached() && !$root.isFreeForm()">Eh, didn't reach the exit. Please try again!</div>
+                    <div class="failed" data-bind="visible: !$root.exitReached() && !$root.isFreeForm(), html: $root.didReachExit"></div>
                     <button type="button" class="btn btn-info" data-bind="click: $root.tryAgain"><span data-bind="html: $root.tryAgainCommand" />
                         <span class="glyphicon glyphicon-repeat"></span>
                     </button>

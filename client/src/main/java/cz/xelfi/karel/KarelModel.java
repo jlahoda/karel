@@ -38,6 +38,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import net.java.html.json.ComputedProperty;
 import net.java.html.json.Function;
 import net.java.html.json.Model;
@@ -655,6 +657,8 @@ final class KarelModel {
         m.setExitReached(false);
     }
 
+    private static final Pattern PROCEDURE_NAME = Pattern.compile("\"(NAME|CALL)\":\"([A-Za-z-]+)\"");
+
     @Function
     static void giveUp(Karel m) {
         tryAgain(m);
@@ -663,7 +667,26 @@ final class KarelModel {
                 p.dispose();
             }
         }
-        workspace.loadBlock(karel.getCurrentTask().getSolution());
+
+        String solution = karel.getCurrentTask().getSolution();
+        Matcher matcher = PROCEDURE_NAME.matcher(solution);
+        StringBuilder translated = new StringBuilder();
+        int lastOffset = 0;
+
+        while (matcher.find()) {
+            String key = matcher.group(1);
+            String procedure = matcher.group(2);
+
+            translated.append(solution.substring(lastOffset, matcher.start()));
+            translated.append("\"" + key + "\":\"" + localizedCommand(procedure) + "\"");
+            lastOffset = matcher.end();
+        }
+
+        translated.append(solution.substring(lastOffset));
+
+        solution = translated.toString();
+
+        workspace.loadBlock(solution);
     }
 
     @Function
@@ -712,6 +735,11 @@ final class KarelModel {
                new MessageFormat(XXXlocalize("HARDCODED_GoHint")).format(new String[] {currentTask != null ? currentTask.getCommandLocalized(): ""});
     }
 
+    @ComputedProperty
+    static String didReachExit() {
+        return XXXlocalize("HARDCODED_DidntReachExit");
+    }
+
     private static final Map<String, Properties> locale2Properties = new HashMap<>();
     private static final Map<String, Properties> baseLocale2Properties = new HashMap<>();
 
@@ -756,6 +784,13 @@ final class KarelModel {
 
     public static String XXXlocalize(String key) {
         return localize(Locale.getDefault().getLanguage(), key);
+    }
+
+    public static String localizedCommand(String command) {
+        String key = "COMMAND_" + command;
+        String localized = KarelModel.XXXlocalize(key);
+
+        return key.equals(localized) ? command : localized;
     }
 
 }

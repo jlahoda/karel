@@ -64,7 +64,7 @@ final class KarelBlockly {
     private static InputStream findLocalizedMsgs(String suffix) {
         InputStream is = KarelBlockly.class.getResourceAsStream("msg/json/" + suffix + ".json");
         if (is == null) {
-            KarelBlockly.class.getResourceAsStream("msg/json/en.json");
+            is = KarelBlockly.class.getResourceAsStream("msg/json/en.json");
         }
         return is;
     }
