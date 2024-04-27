@@ -66,7 +66,8 @@ import net.java.html.json.Property;
     @Property(name = "exitReached", type = boolean.class),
     @Property(name = "isFreeForm", type = boolean.class),
     @Property(name = "commandDone", type = boolean.class),
-    @Property(name = "stopCalled", type = boolean.class)
+    @Property(name = "stopCalled", type = boolean.class),
+    @Property(name = "primaryCommandEmpty", type = boolean.class),
 })
 final class KarelModel {
     /** @guardedby(this) */
