@@ -361,8 +361,12 @@ class TownModel {
         }
 
         String template = KarelModel.XXXlocalize(key);
+        StringBuilder joinedParameters = new StringBuilder();
 
-        return new MessageFormat(template).format(new String[] {errorParams.stream()
-                                                                           .collect(Collectors.joining(""))});
+        for (String errorParam : errorParams) {
+            joinedParameters.append(errorParam);
+        }
+
+        return new MessageFormat(template).format(new String[] {joinedParameters.toString()});
     }
 }
