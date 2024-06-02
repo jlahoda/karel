@@ -296,7 +296,26 @@
         </div>
     </div>
 
-    <div class="navbar navbar-fixed-bottom" role="navigation">
+    <div data-bind="visible: gameStarted">
+      <div class="container">
+        <!--Hello!-->
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="attributions.html" target="_blank">Attributions</a></li>
+            <li><a  data-bind="click: toggleJumpToLevel">Show admin commands</a>
+                <ul data-bind="foreach: tasks, visible: jumpToLevelVisible">
+                    <li>
+                        <a  data-bind="html: name, click: $root.jumpToLevel"></a>
+                    </li>
+                </ul>
+            </li>
+            <li data-bind="visible: jumpToLevelVisible"><a data-bind="click: removeAllCommands">Clear All Commands</a>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="navbar navbar-fixed-bottom" role="navigation" data-bind="visible: !gameStarted()">
       <div class="container">
         <!--Hello!-->
         <div class="navbar-collapse collapse">

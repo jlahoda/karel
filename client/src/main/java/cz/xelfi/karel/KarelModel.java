@@ -70,6 +70,8 @@ import net.java.html.json.Property;
     @Property(name = "commandDone", type = boolean.class),
     @Property(name = "stopCalled", type = boolean.class),
     @Property(name = "primaryCommandEmpty", type = boolean.class),
+    @Property(name = "gameStarted", type = boolean.class),
+    @Property(name = "jumpToLevelVisible", type = boolean.class),
 })
 final class KarelModel {
     /** @guardedby(this) */
@@ -111,6 +113,7 @@ final class KarelModel {
         String tasks = m.getTasksUrl();
         m.loadTasks(tasks, new URI(tasks));
         m.setTab("task");
+        m.setGameStarted(false);
 //        KAREL.schedule(new TimerTask() {
 //            @Override
 //            public void run() {
@@ -668,7 +671,10 @@ final class KarelModel {
             }
         }
 
-        String solution = karel.getCurrentTask().getSolution();
+        installSolution(karel.getCurrentTask().getSolution());
+    }
+
+    static void installSolution(String solution) {
         Matcher matcher = PROCEDURE_NAME.matcher(solution);
         StringBuilder translated = new StringBuilder();
         int lastOffset = 0;
@@ -697,6 +703,68 @@ final class KarelModel {
     @ModelOperation @Function static void startGame(Karel m) {
         List<TaskInfo> currentTasks = m.getTasks();
         chooseTask(m, currentTasks.get(0));
+        m.setGameStarted(true);
+    }
+
+    @ModelOperation @Function static void removeAllCommands(Karel m) {
+        for (Procedure p : workspace.getProcedures()) {
+            p.dispose();
+        }
+    }
+
+    @ModelOperation @Function static void toggleJumpToLevel(Karel m) {
+        m.setJumpToLevelVisible(!m.isJumpToLevelVisible());
+    }
+
+    @ModelOperation @Function static void jumpToLevel(Karel m, TaskInfo data) {
+        TaskInfo current = m.getTasks().get(0);
+
+        if (current.getDescription() == null) {
+            m.jumpToLevelDescriptionLoaded(current.getUrl(), current, data, false);
+        } else {
+            jumpToLevelDescriptionLoaded(m, current.getDescription(), current, data, false);
+        }
+    }
+
+    @OnReceive(url = "{url}", onError = "errorLoadingTask")
+    static void jumpToLevelDescriptionLoaded(Karel m, TaskDescription td, TaskInfo data, TaskInfo targetTask, boolean replaceCommands) {
+        data.setDescription(td);
+
+        if (data == targetTask) {
+            loadTaskDescription(m, data.getDescription(), data);
+            m.setJumpToLevelVisible(false);
+            return ;
+        }
+
+        if (replaceCommands) {
+            for (Procedure p : workspace.getProcedures()) {
+                if (p.getName().equals(data.getDescription().getCommandLocalized())) {
+                    p.dispose();
+                    break;
+                }
+            }
+        }
+
+        if (data.getDescription().getSolution() != null) {
+            installSolution(data.getDescription().getSolution());
+        }
+
+        List<TaskInfo> tasks = m.getTasks();
+
+        for (int i = 0; i < tasks.size(); i++) {
+            TaskInfo currentTask = tasks.get(i);
+
+            if (currentTask == data) {
+                TaskInfo nextTask = tasks.get(i + 1);
+                if (nextTask.getDescription() == null) {
+                    m.jumpToLevelDescriptionLoaded(nextTask.getUrl(), nextTask, targetTask, replaceCommands);
+                } else {
+                    jumpToLevelDescriptionLoaded(m, nextTask.getDescription(), nextTask, targetTask, replaceCommands);
+                }
+
+                break;
+            }
+        }
     }
 
     @ComputedProperty
