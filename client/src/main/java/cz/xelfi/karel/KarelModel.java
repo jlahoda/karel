@@ -710,6 +710,11 @@ final class KarelModel {
     }
 
     @ComputedProperty
+    static String hardcodedHINT() {
+        return XXXlocalize("HARDCODED_HINT");
+    }
+
+    @ComputedProperty
     static String tryAgainCommand() {
         return XXXlocalize("HARDCODED_TryAgain");
     }

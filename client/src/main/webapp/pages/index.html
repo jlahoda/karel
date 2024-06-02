@@ -115,7 +115,7 @@
                 </div>
                 <div class="well">
                     <p data-bind="html: localizedDescription"></p>
-                    <p>HINT: <span data-bind="html: localizedHint"/></p> <!--TODO: collapsible-->
+                    <p><span data-bind="html: $root.hardcodedHINT() + ' ' + localizedHint()"/></p> <!--TODO: collapsible -->
                 </div>
                 <div class="row" data-bind="visible: $root.commandDone" style="font-size: 64px">
                     <center>
