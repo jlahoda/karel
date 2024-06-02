@@ -18,6 +18,7 @@
 package cz.xelfi.karel;
 
 import cz.xelfi.karel.blockly.Execution.State;
+import cz.xelfi.karel.blockly.Language;
 import cz.xelfi.karel.blockly.Procedure;
 import cz.xelfi.karel.blockly.Workspace;
 import java.io.IOException;
@@ -71,6 +72,7 @@ import net.java.html.json.Property;
     @Property(name = "primaryCommandEmpty", type = boolean.class),
     @Property(name = "gameStarted", type = boolean.class),
     @Property(name = "jumpToLevelVisible", type = boolean.class),
+    @Property(name = "languageSelectionVisible", type = boolean.class),
 })
 final class KarelModel {
     /** @guardedby(this) */
@@ -80,6 +82,16 @@ final class KarelModel {
     private static Workspace workspace;
 
     static Karel onPageLoad(String... args) throws Exception {
+        String queryString = args.length > 0 ? args[0] : "";
+        if (queryString.startsWith("?")) {
+            queryString = queryString.substring(1);
+        }
+        for (String part : queryString.split("\\&")) {
+            String[] keyAndvalue = part.split("=", 2);
+            if ("lang".equals(keyAndvalue[0])) {
+                Language.setLanguage(keyAndvalue[1]);
+            }
+        }
         String src = Storage.getDefault().get("source", "\n\n");
         final Scratch s = new Scratch();
         s.getTowns().clear();
@@ -710,6 +722,10 @@ final class KarelModel {
         m.setJumpToLevelVisible(!m.isJumpToLevelVisible());
     }
 
+    @ModelOperation @Function static void toggleLanguageSelectionVisible(Karel m) {
+        m.setLanguageSelectionVisible(!m.isLanguageSelectionVisible());
+    }
+
     @ModelOperation @Function static void jumpToLevel(Karel m, TaskInfo data) {
         TaskInfo current = m.getTasks().get(0);
 
@@ -850,7 +866,7 @@ final class KarelModel {
     }
 
     public static String XXXlocalize(String key) {
-        return localize(Locale.getDefault().getLanguage(), key);
+        return localize(Language.getLanguage(), key);
     }
 
     public static String localizedCommand(String command) {

@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.util.Locale;
 import net.java.html.js.JavaScriptBody;
 import net.java.html.js.JavaScriptResource;
 
@@ -33,7 +32,7 @@ final class KarelBlockly {
         if (js == null) {
             js = init0();
             try {
-                loadMsgs(Locale.getDefault());
+                loadMsgs(Language.getLanguage());
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -45,8 +44,7 @@ final class KarelBlockly {
     @JavaScriptBody(args = {}, body = "return Blockly['karel']")
     private static native Object init0();
 
-    private static void loadMsgs(Locale l) throws IOException {
-        String suffix = l.getLanguage();
+    private static void loadMsgs(String suffix) throws IOException {
         StringBuilder sb;
         try (Reader is = new InputStreamReader(findLocalizedMsgs(suffix), "UTF-8")) {
             sb = new StringBuilder();

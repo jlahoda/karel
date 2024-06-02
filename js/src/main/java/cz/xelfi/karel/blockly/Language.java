@@ -15,13 +15,20 @@
  * along with this program. Look for COPYING file in the top folder.
  * If not, see http://opensource.org/licenses/GPL-2.0.
  */
-package cz.xelfi.karel;
+package cz.xelfi.karel.blockly;
 
-public class BrowserMain {
-    private BrowserMain() {
+import java.util.Locale;
+
+public class Language {
+
+    private static String language = Locale.getDefault().getLanguage();
+
+    public static String getLanguage() {
+        return language;
     }
-    
-    public static void main(String... args) throws Exception {
-        Main.onPageLoad(args);
+
+    public static void setLanguage(String aLanguage) {
+        language = aLanguage;
     }
+
 }

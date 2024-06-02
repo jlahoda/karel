@@ -302,6 +302,13 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="attributions.html" target="_blank">Attributions</a></li>
+            <li><a data-bind="click: toggleLanguageSelectionVisible">Language</a>
+                <ul data-bind="visible: languageSelectionVisible">
+                    <li><a href="?lang=cs">Česky</a></li>
+                    <li><a href="?lang=el">Ελληνικά</a></li>
+                    <li><a href="?lang=en">English</a></li>
+                </ul>
+            </li>
             <li><a  data-bind="click: toggleJumpToLevel">Show admin commands</a>
                 <ul data-bind="foreach: tasks, visible: jumpToLevelVisible">
                     <li>
@@ -321,6 +328,13 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="attributions.html" target="_blank">Attributions</a></li>
+            <li><a data-bind="click: toggleLanguageSelectionVisible">Language</a>
+                <ul data-bind="visible: languageSelectionVisible">
+                    <li><a href="?lang=cs">Česky</a></li>
+                    <li><a href="?lang=el">Ελληνικά</a></li>
+                    <li><a href="?lang=en">English</a></li>
+                </ul>
+            </li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -331,7 +345,8 @@
     <script>
         var vm = bck2brwsr('karel.js');
         var c = vm.loadClass('cz.xelfi.karel.BrowserMain');
-        c.invoke('main');
+        var search = window.location.search;
+        c.invoke('main', [search]);
     </script>
 
 
