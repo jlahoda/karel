@@ -404,7 +404,7 @@ public final class Workspace {
 
             List<String> keys = new ArrayList<>();
             List<String> values = new ArrayList<>();
-            ResourceBundle bundle = ResourceBundle.getBundle("cz/xelfi/karel/blockly/Bundle", Locale.getDefault());
+            ResourceBundle bundle = ResourceBundle.getBundle("cz/xelfi/karel/blockly/Bundle", new Locale(Language.getLanguage()));
             Enumeration<String> en = bundle.getKeys();
             while (en.hasMoreElements()) {
                 String key = en.nextElement();
