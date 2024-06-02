@@ -144,7 +144,7 @@
                           data-bind="click: $root.invokeGo,enable: !$root.running() && !$root.primaryCommandEmpty(), visible: command()">
                             <span data-bind="html: $root.goCommand()" />
                         </button>
-                        <button type="button" class="btn btn-danger" data-bind="click: $root.doStop,visible: command() && $root.running(), html: $root.stopCommand,enable: !$root.stopCalled()"></button>
+                        <button type="button" class="btn btn-danger" data-bind="click: $root.doStop,visible: command() && $root.running(), html: $root.stopCommand"></button> <!--,enable: !$root.stopCalled()-->
                         <!--
                         <progress max="1000" data-bind="value: speed"></progress>
                         -->

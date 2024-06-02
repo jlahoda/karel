@@ -68,7 +68,6 @@ import net.java.html.json.Property;
     @Property(name = "exitReached", type = boolean.class),
     @Property(name = "isFreeForm", type = boolean.class),
     @Property(name = "commandDone", type = boolean.class),
-    @Property(name = "stopCalled", type = boolean.class),
     @Property(name = "primaryCommandEmpty", type = boolean.class),
 })
 final class KarelModel {
@@ -388,13 +387,6 @@ final class KarelModel {
     }
 
     @ModelOperation void animate(final Karel model, List<KarelCompiler> frames) {
-        if (model.isStopCalled()) {
-            model.setCommandDone(false);
-            model.setExitReached(false);
-            model.setRunning(false);
-            model.setStopCalled(false);
-            return ;
-        }
         final List<KarelCompiler> next = animateOne(model, frames);
         if (!next.isEmpty()) {
             animateNext(model, next);
@@ -691,7 +683,9 @@ final class KarelModel {
 
     @Function
     static void doStop(Karel m) {
-        m.setStopCalled(true);
+        m.setCommandDone(false);
+        m.setExitReached(false);
+        m.setRunning(false);
     }
 
     @ModelOperation @Function static void startGame(Karel m) {
