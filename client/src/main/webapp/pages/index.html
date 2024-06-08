@@ -61,7 +61,7 @@
     </div>-->
 
     <template id="home">
-        <div class="container theme-showcase" role="main">
+<!--        <div class="container theme-showcase" role="main">
           <div class="jumbotron">
             <h1>Karel</h1>
             <p>Cesta programátora je těžká. 
@@ -73,7 +73,7 @@
             <p><a href="#" data-bind="click: changeTabTown"class="btn btn-primary btn-lg" role="button">Vyzkoušet si &raquo;</a></p>
             <p><a href="#" data-bind="click: changeTabTask"class="btn btn-primary btn-lg" role="button">Vybrat si úkol &raquo;</a></p>
           </div>
-        </div>
+        </div>-->
     </template>
     
     <template id="task">
@@ -191,7 +191,7 @@
                     <!-- ko foreach: rows -->
                     <tr>
                         <!-- ko foreach: columns -->
-                        <td data-bind="click: $parents[1].rotate">
+                        <td>
                             <!-- i class="material-icons">&#xE868;</i -->
                             <!--<div class="karel material-icons robot" data-bind="visible: robot() !== 0, css: ('direction-' + robot())">&#xE868;</div>-->
                             <div class="karel material-icons robot" data-bind="visible: robot() === 1"><img width="32" height="32" src="img/karel/karel-vychod.png"/></div>
@@ -315,8 +315,10 @@
                         <a  data-bind="html: name, click: $root.jumpToLevel"></a>
                     </li>
                 </ul>
+                <ul>
+                    <li data-bind="visible: jumpToLevelVisible"><a data-bind="click: removeAllCommands">Clear All Commands</a>
+                </ul>
             </li>
-            <li data-bind="visible: jumpToLevelVisible"><a data-bind="click: removeAllCommands">Clear All Commands</a>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

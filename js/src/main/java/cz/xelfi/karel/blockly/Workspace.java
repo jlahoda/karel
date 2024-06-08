@@ -20,12 +20,12 @@ package cz.xelfi.karel.blockly;
 import cz.xelfi.karel.blockly.grammar.KarelBaseListener;
 import cz.xelfi.karel.blockly.grammar.KarelLexer;
 import cz.xelfi.karel.blockly.grammar.KarelParser;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.Properties;
 import net.java.html.js.JavaScriptBody;
 import net.java.html.js.JavaScriptResource;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -404,15 +404,26 @@ public final class Workspace {
 
             List<String> keys = new ArrayList<>();
             List<String> values = new ArrayList<>();
-            ResourceBundle bundle = ResourceBundle.getBundle("cz/xelfi/karel/blockly/Bundle", new Locale(Language.getLanguage()));
-            Enumeration<String> en = bundle.getKeys();
-            while (en.hasMoreElements()) {
-                String key = en.nextElement();
-                keys.add(key);
-                values.add(bundle.getString(key));
+            try (InputStream in = findLocalizedMsgs(Language.getLanguage())) {
+                Properties props = new Properties();
+                props.load(in);
+                for (String key : props.stringPropertyNames()) {
+                    keys.add(key);
+                    values.add(props.getProperty(key));
+                }
+            } catch (IOException ex) {
+                throw new IllegalStateException(ex);
             }
             js = create0(karel, id, keys.toArray(), values.toArray());
             listen0(js, ws);
+        }
+
+        private static InputStream findLocalizedMsgs(String suffix) {
+            InputStream is = KarelBlockly.class.getResourceAsStream("Bundle_" + suffix + ".properties");
+            if (is == null) {
+                is = KarelBlockly.class.getResourceAsStream("Bundle.properties");
+            }
+            return is;
         }
 
         @JavaScriptBody(args = {}, body = "")
