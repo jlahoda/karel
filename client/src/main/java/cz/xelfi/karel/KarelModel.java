@@ -730,32 +730,33 @@ final class KarelModel {
         TaskInfo current = m.getTasks().get(0);
 
         if (current.getDescription() == null) {
-            m.jumpToLevelDescriptionLoaded(current.getUrl(), current, data, false);
+            m.jumpToLevelDescriptionLoaded(current.getUrl(), current, data);
         } else {
-            jumpToLevelDescriptionLoaded(m, current.getDescription(), current, data, false);
+            jumpToLevelDescriptionLoaded(m, current.getDescription(), current, data);
         }
     }
 
     @OnReceive(url = "{url}", onError = "errorLoadingTask")
-    static void jumpToLevelDescriptionLoaded(Karel m, TaskDescription td, TaskInfo data, TaskInfo targetTask, boolean replaceCommands) {
+    static void jumpToLevelDescriptionLoaded(Karel m, TaskDescription td, TaskInfo data, TaskInfo targetTask) {
         data.setDescription(td);
 
         if (data == targetTask) {
+            m.setCurrentInfo(data);
             loadTaskDescription(m, data.getDescription(), data);
             m.setJumpToLevelVisible(false);
             return ;
         }
 
-        if (replaceCommands) {
-            for (Procedure p : workspace.getProcedures()) {
-                if (p.getName().equals(data.getDescription().getCommandLocalized())) {
-                    p.dispose();
-                    break;
-                }
+        boolean installSolution = true;
+
+        for (Procedure p : workspace.getProcedures()) {
+            if (p.getName().equals(data.getDescription().getCommandLocalized())) {
+                installSolution = false;
+                break;
             }
         }
 
-        if (data.getDescription().getSolution() != null) {
+        if (installSolution && data.getDescription().getSolution() != null) {
             installSolution(data.getDescription().getSolution());
         }
 
@@ -767,9 +768,9 @@ final class KarelModel {
             if (currentTask == data) {
                 TaskInfo nextTask = tasks.get(i + 1);
                 if (nextTask.getDescription() == null) {
-                    m.jumpToLevelDescriptionLoaded(nextTask.getUrl(), nextTask, targetTask, replaceCommands);
+                    m.jumpToLevelDescriptionLoaded(nextTask.getUrl(), nextTask, targetTask);
                 } else {
-                    jumpToLevelDescriptionLoaded(m, nextTask.getDescription(), nextTask, targetTask, replaceCommands);
+                    jumpToLevelDescriptionLoaded(m, nextTask.getDescription(), nextTask, targetTask);
                 }
 
                 break;
