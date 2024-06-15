@@ -1,0 +1,108 @@
+\documentclass{article}
+\usepackage{hyperref}
+\usepackage[pdftex]{graphicx}
+%\usepackage{graphicx}
+\DeclareGraphicsExtensions{.png}
+\begin{document}
+\title{Karla\\ \large{Guide for Lecturers}}
+\date{}
+\maketitle
+
+\section{Introduction}
+
+This is a \href{https://en.wikipedia.org/wiki/Karel_(programming_language)}{Karel language environment},
+simplified, and gamified in an attempt to make it more intriguing for complete beginners.
+
+The game is about a robot, Karla, who is lost in a building, and needs help to get
+out. The player needs to guide Karla through a series of rooms, guiding her to the
+exist in each room. The tasks are getting progressively more challenging, obviously.
+
+The URL for the game is:
+\begin{center}
+\href{http://karla.lahoda.info/}{http://karla.lahoda.info/}
+\end{center}
+
+\section{General Recommendations}
+
+Read the description at the top for each room. It sets up the scene, and also contain
+a hint on how to solve the task at hand.
+
+The game is based on \href{https://blockly.games/}{Blockly}, creating the commands
+should not be surprising.
+
+Note the main command for each room is pre-created. It is not necessary (although
+permitted) to create new commands.
+
+There is "Karla's speed" knob under the Karla's room display. It can be used to speed
+up Karla, which is handy in the later rooms, where the commands become more complex.
+
+\subsection{Changing Language}
+
+At the very bottom, there is \texttt{Language} button. Click on it, it will expand
+to show Czech, Greek and English. Note that changing the language will reset the game
+state (see blow).
+
+\subsection{Resolving problems}
+
+If the program for a given room does not guide Karla to the exit, option to "Give
+Up" is given, which will delete whatever code was provided for the current room's
+command with a canonical known-working version.
+
+If bigger problems occur, one solution is to hard-reload the page (which will reset
+the game). To avoid the need to go through all the rooms again, there is \texttt{Show
+admin commands} button at the bottom. Clicking on it will show a clickable list of rooms,
+clicking at the room will jump into that room, creating any non-existent commands
+along the way as needed.
+
+Please note that jumping to a specific room this will not change \emph{existing} commands,
+even if they are empty! So if jumping to a room further down the line, please make
+sure the command for the current room is either deleted, or filled fully (e.g. using
+the "Give Up" button).
+
+It is also possible to clear all the existing commands by using \texttt{Show admin commands/Clear All Commands}.
+Jumping to any room should be safe after clearing the commands.
+
+\section{Important Rooms}
+
+\subsection{Room 1}
+
+In this room, there is no command to be declared/filled. There are "step" and "left-turn"
+commands, which should be used to manually guide Karla to exit:
+
+\begin{center}
+\includegraphics[width=0.5\textwidth]{step-left_en}\\
+English commands\\
+\includegraphics[width=0.5\textwidth]{step-left_el}\\
+Greek commands
+\end{center}
+
+\subsection{Rooms 2 and 3}
+
+In these rooms, the command does need to move Karla to the exist, just rotate Karla
+so that she's facing the exit. It can be used to show the power of dividing more complex
+tasks into smaller ones: in Room 2, create \texttt{turn-back} command as \texttt{turn left} and
+\texttt{turn left}. In Room 3, \texttt{turn-right} can be declared as \texttt{turn-back}
+and\texttt{turn left}.
+
+\subsection{Room 4}
+
+Starting in these rooms, Karla mus tbe guided to stand at the exit, not just to face
+it.
+
+\subsection{Room 7}
+
+Starting with this room, there is a sequence of 3 rooms that Karla must pass with
+the same program. It is no longer possible to pre-create the path, tests and/or loops
+must be used.
+
+\subsection{Room 11}
+
+Karla is out of the building, congratulations! This is the end of the game!
+
+\section{Room Texts}
+
+English version of the texts and hint from every room:
+
+\input{rooms.tex}
+
+\end{document}

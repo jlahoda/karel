@@ -1,0 +1,105 @@
+\subsection{Room 1}
+
+I need your help!
+
+I'm robot Karla, and I got lost in this building. My navigation circuits are broken, so I cannot navigate properly.
+
+Could you please use the commands, and guide me to the exit?
+
+HINT: Use the 'turn-left' and 'move' commands to move Karla to the exit. Note Karla cannot walk into the walls!
+
+\subsection{Room 2}
+
+Uff, thanks for helping me to get out of the room.
+
+I am in another room now. I am afraid I'll need your help to get out of not only this room, but to get through a series of rooms, to get out of this building.
+
+Also, there's a lot of interference here, I'm afraid you cannot give me commands one by one anymore. I'll need you to provide me a list of command I can follow.
+
+Luckily, some of my sight is still preserved, despite the interference, so it will be enough to ensure I am standing next to the exit, and facing it.
+
+HINT: Note the exit is behind Karla. Turn her so that she faces back. Do it by doing to left turn. Fill the commands in the pre-created 'turn-back' command, and press GO!
+
+\subsection{Room 3}
+
+Ufff, thanks! Another room, the same task as last time - can you please turn me so that I face the exit?
+
+HINT: Note the exit is to the right of Karla. But, Karla does not have a command to turn right, only to turn left. Turning right is the same as turning left three times. Define the command so that it will turn Karla left three times. Or, even better, define the command by reusing the 'turn-back' command from the previous room: turn right is the same as turning back and then turning left.
+
+\subsection{Room 4}
+
+Ohhh, another room! Thanks for your help so far!
+
+I am afraid the interference is getting worse. My sight is very impaired now. I am sure it will get better when I get out of this building. But, for now, I'm afraid I'll need you to provide me instructions to reach the exit, not only to stand next to it.
+
+HINT: The exit is two rows ahead of Karla. Just define the command so that Karla moves twice.
+
+\subsection{Room 5}
+
+Thanks for guiding me through that room! Can you guide me through this room as well?
+
+HINT: This is similar to the previous room - Karla just needs to go forward. The difference now is that the exit is far away. Instead of specifying the move command 6 times, use the 'repeat' command to repeat the 'move' command 6 times.
+
+\subsection{Room 6}
+
+Uff, that's another room behind me, thanks!
+
+Please help he through this room as well!
+
+HINT:
+
+In this room, Karla needs to go straight for a bit, then turn right, and the go straight for a bit more. Please use the 'turn-right' command that you defined before to turn right.
+
+You could also observe that Karla in both cases needs to go exactly 6 steps - we have a command for that, why not use it?
+
+\subsection{Room 7}
+
+That was good, thank you for walking me through!
+
+We've got another problem, I'm afraid: the interference is more intensive across next few rooms. Would you please provide me instructions that will guide me through them?
+
+HINT:
+
+Karla needs to go straight for a bit, then turn right, and the go straight for a bit more. Unlike previous cases, there are multiple rooms now, and the same instructions must work for all of them. Note that Karla cannot step into a wall - she could scratch herself. Please use the 'while' command with the 'is not seeing wall' condition to walk until the wall is right in front of her, and then turn. Then you can use the 'while' command again this time with the 'i standing on exit' condition to reach the exit.
+
+\subsection{Room 8}
+
+Thanks for getting me through all those rooms! It seems there's a series of curved hallways ahead of me. This will be tricky!
+
+HINT:
+
+We will need to use more conditions, and a loop now. Create a 'while' loop with a condition 'is not exit'. Inside it, we need to to the commands that will help Karla get to the exit. Note the hallways are very simple - when Karla's sees a wall while heading to right (east), she always need to turn left, and when she's sees a wall while heading up (north), she always needs to turn right. And she never heads in any other direction.So, create a program that will go straight until Karla sees a wall, and then turns left is she's heading to east, and to right otherwise.
+
+\subsection{Room 9}
+
+Uh, I squeezed through the narrow hallways, thanks! But seems more hallways are ahead, and this time they are not so easy!
+
+HINT:
+
+Note this time, the hallways now go in all directions. Karla will need to go both left and right, and both up and down. There are even some wider parts of the hallways!
+
+The way to get out of this maze is to walk through it with right hand on the wall. (It would be, of course, possible to go with the left hand on the wall, as long as we don't change the hand on the wall while going through the maze.)
+
+Note Karla cannot check directly if a wall is next to her on the right side, she can only check if there's a wall directly in front of her in the direction she is heading. But she can turn right, and look if a wall is there.
+
+Also note that at the beginning, Karla has a wall next to her on the right.
+
+When Karla has a wall next to her on right, and there's nothing in front of her, she can make a step. And then she needs to ensure her orientation is such that there is a wall on her right side. Given she just made a step when she had a wall on her right, it is enough to turn right, and the turn left as long as there's a wall in front of her. Try to imagine how she will be oriented in various spots in the hallway. Then she can start from the beginning, doing a step, and re-orientating so that there's a wall on her right side, until she reaches exit.
+
+\subsection{Room 10}
+
+That was difficult, thanks for guiding me through! This time it seems I am in the middle of a room! But, I feel this may be the last set of rooms - I may be nearly out!
+
+HINT:
+
+This time, Karla is in the middle of an empty space, and there is a maze to the exit. In the previous set of rooms, Karla learned to find the exit when she start with a wall on her right side (and empty space in front of her). Let's build on that - teach Karla to reach that state from an empty space.
+
+This can be simply done by walking until Karla sees a wall, and then turning left as long as Karla sees a wall. Then just call the command from the previous set of rooms to guide her to the exit!
+
+\subsection{Room 11}
+
+Hurray, I am out now. Thanks for freeing me up!
+
+Feel free to give me some commands to walk around!
+
+HINT:
